@@ -52,7 +52,7 @@ function removeField(button) {
                         'Content-Type': 'application/json',
                         'X-Auth': 'DEFAULT'
                     },
-                    body: JSON.stringify({"email": formData.get('email'), pages: "email": formData.getAll('pages[]')})
+                    body: JSON.stringify({"email": formData.get('email'), pages: formData.getAll('pages[]')})
                 });
 
                 if (!response.ok) {
