@@ -3,19 +3,13 @@ async function fetchData() {
     const apiUrl = 'https://api.green-coding.io/v1/runs?uri=https%3A%2F%2Fgithub.com%2Fgreen-coding-solutions%2Fwebsite-tester&limit=50';
 
     try {
-        // Fetch data from the API
         const  response = await fetch(apiUrl);
 
-        // Check if response is successful
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
 
-        // Parse JSON data
         const data = await response.json();
-
-        // Output JSON data
-        console.log(data);
         return response
 
     } catch (error) {
@@ -38,7 +32,15 @@ function removeField(button) {
 
 (async () => {
 
+        const response = fetchData();
 
+        response.forEach(item => {
+            document.querySelector('#websites').insertAdjacentHTML(
+                'beforeend',
+                `<div class="ui yellow segment"><a class="ui label" href="https://metrics.green-coding.io/stats.html?id=${item[0]}">${item[1]} <i class="link icon"></i></a> (${(new Date(item[4])).toLocaleDateString('de-DE', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' })})</div>`,
+
+            );
+        });
 
         // Prevent form submission (for demonstration purposes)
         document.querySelector('#page-form').onsubmit = async function(e) {
