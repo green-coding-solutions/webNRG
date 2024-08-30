@@ -57,11 +57,11 @@ function removeField(button) {
                 });
 
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    throw new Error(`HTTP error! status: ${response.status} and text: ${await response.text()} `);
                 }
 
                 const result = await response.json();
-                alert('Thanks, we have received your measuremt request and will e-mail you shortly!');
+                alert('Thanks, we have received your measurement request and will e-mail you shortly!');
 
                 // reset form
                 document.querySelector('#page-form').reset()
