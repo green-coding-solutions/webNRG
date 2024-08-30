@@ -48,11 +48,10 @@ function removeField(button) {
             const formData = new FormData(this);
 
             try {
-                const response = await fetch('https://website-tester.green-coding.io/save', {
+                const response = await fetch('https://transport.green-coding.io/save', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'X-Auth': 'DEFAULT'
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({"email": formData.get('email'), pages: formData.getAll('pages[]')})
                 });
