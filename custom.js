@@ -48,7 +48,7 @@ function removeField(button) {
             const formData = new FormData(this);
 
             try {
-                const response = await fetch('https://transport.green-coding.io/save', {
+                const response = await fetch('https://save-to-github.arne5926.workers.dev/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
