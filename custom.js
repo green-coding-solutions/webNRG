@@ -61,8 +61,12 @@ function removeField(button) {
                 }
 
                 const result = await response.json();
-                console.log('Success:', result);
-                alert('POST request successful! Check console for details.');
+                alert('Thanks, we have received your measuremt request and will e-mail you shortly!');
+
+                // reset form
+                document.querySelector('#page-form').reset()
+                // remove all extra pages
+                document.querySelectorAll('#inputs-container a.ui.left.icon.label.red').forEach(el => el.click())
             } catch (error) {
                 console.error('Error:', error);
                 alert('An error occurred. Check console for details.');
