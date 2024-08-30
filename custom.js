@@ -9,8 +9,8 @@ async function fetchData() {
           throw new Error('Network response was not ok');
         }
 
-        const data = await response.json();
-        return response
+        const response_body = await response.json();
+        return response_body.data
 
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -32,9 +32,9 @@ function removeField(button) {
 
 (async () => {
 
-        const response = fetchData();
+        const data = await fetchData();
 
-        response.forEach(item => {
+        data.forEach(item => {
             document.querySelector('#websites').insertAdjacentHTML(
                 'beforeend',
                 `<div class="ui yellow segment"><a class="ui label" href="https://metrics.green-coding.io/stats.html?id=${item[0]}">${item[1]} <i class="link icon"></i></a> (${(new Date(item[4])).toLocaleDateString('de-DE', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' })})</div>`,
