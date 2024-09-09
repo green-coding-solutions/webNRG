@@ -103,10 +103,10 @@ flow:
         log-stdout: true
         log-stderr: true`
 
-          pages.forEach(el => {
+          pages.forEach((el, index) => {
               fileContent = `${fileContent}
 
-  - name: Warmup
+  - name: Warmup ${index+1}/${pages.length}
     container: gcb-playwright-warmup
     commands:
       - type: console
@@ -118,10 +118,10 @@ flow:
 
           })
 
-          pages.forEach(el => {
+          pages.forEach((el, index) => {
               fileContent = `${fileContent}
 
-  - name: Step ${el}
+  - name: Step ${el} - ${index+1}/${pages.length}
     container: gcb-playwright-run
     commands:
       - type: console
