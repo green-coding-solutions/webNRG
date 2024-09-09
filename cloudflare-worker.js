@@ -62,7 +62,7 @@ services:
 flow:
 
   - name: Named pipe (warmup)
-    container: gcb-playwright-warump
+    container: gcb-playwright-warmup
     commands:
       - type: console
         command: mkfifo /tmp/my_fifo_warmup
