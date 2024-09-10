@@ -50,9 +50,9 @@ sci:
 
 services:
   gcb-playwright-warmup:
-    image: greencoding/gcb_playwright:v6
+    image: greencoding/gcb_playwright:v12
   gcb-playwright-run:
-    image: greencoding/gcb_playwright:v6
+    image: greencoding/gcb_playwright:v12
 
   squid:
     image: greencoding/squid_reverse_proxy:v1
