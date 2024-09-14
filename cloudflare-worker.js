@@ -121,7 +121,7 @@ flow:
           pages.forEach((el, index) => {
               fileContent = `${fileContent}
 
-  - name: Step ${el} - ${index+1}/${pages.length}
+  - name: Step ${el} - ${index+1} of ${pages.length}
     container: gcb-playwright-run
     commands:
       - type: console
