@@ -181,7 +181,7 @@ flow:
           filename: path,
           email: email,
           branch: 'intercept-cache-proxy',
-          machine_id: 7,
+          machine_id: 6,
           name: website,
           schedule_mode: 'one-off',
           url: 'https://github.com/green-coding-solutions/website-tester'
