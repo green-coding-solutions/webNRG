@@ -106,12 +106,12 @@ flow:
           pages.forEach((el, index) => {
               fileContent = `${fileContent}
 
-  - name: Warmup ${index+1}/${pages.length}
+  - name: Warmup ${el.replaceAll('/','_')} (max. 5 s)
     container: gcb-playwright-warmup
     commands:
       - type: console
         shell: bash
-        command: echo "https://${el}" > /tmp/my_fifo_warmup
+        command: echo "https://${el}" > /tmp/my_fifo_warmup && sleep 5
         read-notes-stdout: true
         log-stdout: true
         log-stderr: true`
@@ -121,7 +121,7 @@ flow:
           pages.forEach((el, index) => {
               fileContent = `${fileContent}
 
-  - name: Step ${el} - ${index+1} of ${pages.length}
+  - name: Go to and idle ${el.replaceAll('/','_')} (max. 5 s)
     container: gcb-playwright-run
     commands:
       - type: console
