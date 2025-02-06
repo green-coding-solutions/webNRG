@@ -36,7 +36,8 @@ export default {
       const owner = 'green-coding-solutions';
       const repo = 'website-tester';
       const branch = 'intercept-cache-proxy';
-      const token = env['github-pat'];
+      const github_api_token = env['github-pat'];
+      const gmt_api_token = env['gmt-api-token'];
 
       // Content for the new file
       let fileContent = `
@@ -151,7 +152,7 @@ flow:
       const response_github = await fetch(apiUrl, {
         method: 'PUT',
         headers: {
-          'Authorization': `token ${token}`,
+          'Authorization': `token ${github_api_token}`,
           'User-Agent': 'Cloudflare Worker save-to-github',
           'Content-Type': 'application/json',
         },
@@ -176,6 +177,7 @@ flow:
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-Authentication': gmt_api_token,
         },
         body: JSON.stringify({
           filename: path,
