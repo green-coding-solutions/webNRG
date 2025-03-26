@@ -186,7 +186,7 @@ flow:
           machine_id: 6,
           name: website,
           schedule_mode: 'one-off',
-          url: 'https://github.com/green-coding-solutions/website-tester'
+          repo_url: 'https://github.com/green-coding-solutions/website-tester'
 
         }),
       });
