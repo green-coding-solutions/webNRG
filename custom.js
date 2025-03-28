@@ -37,7 +37,23 @@ function removeField(button) {
         data.forEach(item => {
             document.querySelector('#websites').insertAdjacentHTML(
                 'beforeend',
-                `<div class="ui yellow segment"><a class="ui label" href="https://metrics.green-coding.io/stats.html?id=${item[0]}">${item[1]} <i class="link icon"></i></a> (${(new Date(item[4])).toLocaleDateString('de-DE', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' })})</div>`,
+                `<div class="ui yellow segment"><a class="ui label" href="https://metrics.green-coding.io/stats.html?id=${item[0]}">${item[1]} <i class="link icon"></i></a> (${(new Date(item[4])).toLocaleDateString('de-DE', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' })})
+                    <hr>
+                    <div class="badge-container">
+                        <a href="http://metrics.green-coding.internal:9142/stats.html?id=${item[0]}">
+                            <img src="http://api.green-coding.internal:9142/v1/badge/single/${item[0]}?metric=cpu_energy_rapl_msr_component" loading="lazy">
+                        </a>
+                        <a href="http://metrics.green-coding.internal:9142/stats.html?id=${item[0]}">
+                            <img src="http://api.green-coding.internal:9142/v1/badge/single/${item[0]}?metric=network_energy_formula_global" loading="lazy">
+                        </a>
+                        <a href="http://metrics.green-coding.internal:9142/stats.html?id=${item[0]}">
+                            <img src="http://api.green-coding.internal:9142/v1/badge/single/${item[0]}?metric=cpu_power_rapl_msr_component" loading="lazy">
+                        </a>
+                        <a href="http://metrics.green-coding.internal:9142/stats.html?id=${item[0]}">
+                            <img src="http://api.green-coding.internal:9142/v1/badge/single/${item[0]}?metric=network_carbon_formula_global" loading="lazy">
+                        </a>
+                    </div>
+                </div>`,
 
             );
         });
