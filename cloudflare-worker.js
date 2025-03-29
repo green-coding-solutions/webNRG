@@ -50,9 +50,9 @@ sci:
   R_d: Website load
 
 services:
-  gcb-playwright-warmup:
+  gcb-playwright-proxy:
     image: greencoding/gcb_playwright:v17
-  gcb-playwright-run:
+  gcb-playwright-user:
     image: greencoding/gcb_playwright:v17
 
   squid:
@@ -62,20 +62,22 @@ services:
 
 flow:
 
-  - name: Named pipe (warmup)
-    container: gcb-playwright-warmup
+  - name: Named pipe (proxy-cache-warmup)
+    container: gcb-playwright-proxy
     commands:
       - type: console
         command: mkfifo /tmp/my_fifo_warmup
+        hidden: true
 
-  - name: Named pipe (run)
-    container: gcb-playwright-run
+  - name: Named pipe (user)
+    container: gcb-playwright-user
     commands:
       - type: console
         command: mkfifo /tmp/my_fifo_run
+        hidden: true
 
-  - name: Startup (warmup)
-    container: gcb-playwright-warmup
+  - name: Startup (proxy-cache-warmup)
+    container: gcb-playwright-proxy
     commands:
       - type: console
         detach: true
@@ -83,9 +85,10 @@ flow:
         read-notes-stdout: true
         log-stdout: true
         log-stderr: true
+        hidden: true
 
-  - name: Startup (run)
-    container: gcb-playwright-run
+  - name: Startup Browser
+    container: gcb-playwright-user
     commands:
       - type: console
         detach: true
@@ -96,34 +99,38 @@ flow:
 
 
   - name: Pause (both)
-    container: gcb-playwright-warmup
+    container: gcb-playwright-proxy
     commands:
       - type: console
         command: sleep 2
         read-notes-stdout: true
         log-stdout: true
-        log-stderr: true`
+        log-stderr: true
+        hidden: true`
 
+          // technically we do not support multiple pages atm and when supplying this will fail in GMT due to name conflicts
           pages.forEach((el, index) => {
               fileContent = `${fileContent}
 
-  - name: Warmup ${el.replaceAll('/','_')} (max. 5 s)
-    container: gcb-playwright-warmup
+  - name: Warmup Proxy Caches and idle
+    container: gcb-playwright-proxy
     commands:
       - type: console
         shell: bash
         command: echo "https://${el}" > /tmp/my_fifo_warmup && sleep 5
         read-notes-stdout: true
         log-stdout: true
-        log-stderr: true`
+        log-stderr: true
+        hidden: true`
 
           })
 
+          // technically we do not support multiple pages atm and when supplying this will fail in GMT due to name conflicts
           pages.forEach((el, index) => {
               fileContent = `${fileContent}
 
-  - name: Go to and idle ${el.replaceAll('/','_')} (max. 5 s)
-    container: gcb-playwright-run
+  - name: Browse to and idle
+    container: gcb-playwright-user
     commands:
       - type: console
         shell: bash
@@ -135,7 +142,7 @@ flow:
 
           fileContent = `${fileContent}
 
-  - name: Dump Log
+  - name: Dump Log (proxy-cache-warmup)
     container: squid
     commands:
       - type: console
@@ -143,6 +150,7 @@ flow:
         read-notes-stdout: true
         log-stdout: true
         log-stderr: true
+        hidden: true
 `;
 
       // GitHub API endpoint for creating or updating a file
