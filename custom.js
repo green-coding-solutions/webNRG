@@ -32,25 +32,33 @@ function removeField(button) {
 
 (async () => {
 
+        document.querySelectorAll(".close.icon").forEach(link => {
+            link.addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent default navigation if needed
+                this.parentElement.remove(); // Remove the parent container
+            });
+        });
+
+
         const data = await fetchData();
 
         data.forEach(item => {
             document.querySelector('#websites').insertAdjacentHTML(
                 'beforeend',
-                `<div class="ui yellow segment"><a class="ui label" href="https://metrics.green-coding.io/stats.html?id=${item[0]}">${item[1]} <i class="link icon"></i></a> (${(new Date(item[4])).toLocaleDateString('de-DE', { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' })})
+                `<div class="ui yellow segment"><a class="ui label" href="https://metrics.green-coding.io/stats.html?id=${item[0]}">${item[1]} - (${(new Date(item[4])).toLocaleDateString(navigator.language, { year: 'numeric', month: 'short', day: 'numeric' })}) <i class="external alternate icon"></i></a>
                     <hr>
                     <div class="badge-container">
-                        <a href="http://metrics.green-coding.io/stats.html?id=${item[0]}">
-                            <img src="https://api.green-coding.io/v1/badge/single/${item[0]}?metric=cpu_energy_rapl_msr_component" loading="lazy">
+                        <a href="http://metrics.green-coding.io/stats.html?id=${item[0]}#RUNTIME__Browse%20to%20and%20idle">
+                            <img src="https://api.green-coding.io/v1/badge/single/${item[0]}?metric=cpu_energy_rapl_msr_component&phase=Browse%20to%20and%20idle" loading="lazy">
                         </a>
-                        <a href="http://metrics.green-coding.io/stats.html?id=${item[0]}">
-                            <img src="https://api.green-coding.io/v1/badge/single/${item[0]}?metric=network_energy_formula_global" loading="lazy">
+                        <a href="http://metrics.green-coding.io/stats.html?id=${item[0]}#RUNTIME__Browse%20to%20and%20idle">
+                            <img src="https://api.green-coding.io/v1/badge/single/${item[0]}?metric=network_energy_formula_global&phase=Browse%20to%20and%20idle" loading="lazy">
                         </a>
-                        <a href="http://metrics.green-coding.io/stats.html?id=${item[0]}">
-                            <img src="https://api.green-coding.io/v1/badge/single/${item[0]}?metric=cpu_power_rapl_msr_component" loading="lazy">
+                        <a href="http://metrics.green-coding.io/stats.html?id=${item[0]}#RUNTIME__Browse%20to%20and%20idle">
+                            <img src="https://api.green-coding.io/v1/badge/single/${item[0]}?metric=cpu_power_rapl_msr_component&phase=Browse%20to%20and%20idle" loading="lazy">
                         </a>
-                        <a href="http://metrics.green-coding.io/stats.html?id=${item[0]}">
-                            <img src="https://api.green-coding.io/v1/badge/single/${item[0]}?metric=network_carbon_formula_global" loading="lazy">
+                        <a href="http://metrics.green-coding.io/stats.html?id=${item[0]}#RUNTIME__Browse%20to%20and%20idle">
+                            <img src="https://api.green-coding.io/v1/badge/single/${item[0]}?metric=network_carbon_formula_global&phase=Browse%20to%20and%20idle" loading="lazy">
                         </a>
                     </div>
                 </div>`,
