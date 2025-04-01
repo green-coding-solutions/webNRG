@@ -52,16 +52,16 @@ function removeField(button) {
                             <img src="https://api.green-coding.io/v1/badge/single/${item[0]}?metric=cpu_energy_rapl_msr_component&phase=Browse%20to%20and%20idle" loading="lazy">
                         </a>
                         <a href="http://metrics.green-coding.io/stats.html?id=${item[0]}#RUNTIME__Browse%20to%20and%20idle">
-                            <img src="https://api.green-coding.io/v1/badge/single/${item[0]}?metric=network_energy_formula_global&phase=Browse%20to%20and%20idle" loading="lazy">
-                        </a>
-                        <a href="http://metrics.green-coding.io/stats.html?id=${item[0]}#RUNTIME__Browse%20to%20and%20idle">
-                            <img src="https://api.green-coding.io/v1/badge/single/${item[0]}?metric=psu_energy_ac_xgboost_machine&phase=Browse%20to%20and%20idle" loading="lazy">
-                        </a>
-                        <a href="http://metrics.green-coding.io/stats.html?id=${item[0]}#RUNTIME__Browse%20to%20and%20idle">
                             <img src="https://api.green-coding.io/v1/badge/single/${item[0]}?metric=cpu_power_rapl_msr_component&phase=Browse%20to%20and%20idle" loading="lazy">
                         </a>
                         <a href="http://metrics.green-coding.io/stats.html?id=${item[0]}#RUNTIME__Browse%20to%20and%20idle">
+                            <img src="https://api.green-coding.io/v1/badge/single/${item[0]}?metric=network_energy_formula_global&phase=Browse%20to%20and%20idle" loading="lazy">
+                        </a>
+                        <a href="http://metrics.green-coding.io/stats.html?id=${item[0]}#RUNTIME__Browse%20to%20and%20idle">
                             <img src="https://api.green-coding.io/v1/badge/single/${item[0]}?metric=network_carbon_formula_global&phase=Browse%20to%20and%20idle" loading="lazy">
+                        </a>
+                        <a href="http://metrics.green-coding.io/stats.html?id=${item[0]}#RUNTIME__Browse%20to%20and%20idle">
+                            <img src="https://api.green-coding.io/v1/badge/single/${item[0]}?metric=psu_energy_ac_xgboost_machine&phase=Browse%20to%20and%20idle" loading="lazy">
                         </a>
                         <a href="http://metrics.green-coding.io/stats.html?id=${item[0]}#RUNTIME__Browse%20to%20and%20idle">
                             <img src="https://api.green-coding.io/v1/badge/single/${item[0]}?metric=psu_power_ac_xgboost_machine&phase=Browse%20to%20and%20idle" loading="lazy">
