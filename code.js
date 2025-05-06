@@ -1,6 +1,6 @@
 // Function to fetch data from the API and output JSON
 async function fetchData() {
-    const apiUrl = 'https://api.green-coding.io/v1/runs?uri=https%3A%2F%2Fgithub.com%2Fgreen-coding-solutions%2Fwebsite-tester&limit=5';
+    const apiUrl = 'https://api.green-coding.io/v2/runs?uri=https%3A%2F%2Fgithub.com%2Fgreen-coding-solutions%2Fwebsite-tester&limit=5';
 
     try {
         const  response = await fetch(apiUrl);
