@@ -9,9 +9,9 @@
         <!-- Site Properties -->
         <title>webNRG - Measure energy and CO2 cost of your website</title>
         <link rel="shortcut icon" href="/favicon.ico">
-        <link rel="icon" href="/favicon.ico">
-        <link rel="icon" href="/favicon-16x16.png" sizes="16x16">
-        <link rel="icon" href="/favicon-32x32.png" sizes="32x32">
+        <link rel="icon" href="favicon.ico">
+        <link rel="icon" href="favicon-16x16.png" sizes="16x16">
+        <link rel="icon" href="favicon-32x32.png" sizes="32x32">
         <meta name="description" content="Measure the actual energy cost and CO2 emissions that the browser produces when accessing and rendering your website">
         <link rel="stylesheet" type="text/css" class="ui" href="dist/css/semantic_reduced.min.css">
         <style type="text/css">
@@ -97,7 +97,7 @@
                 <div class="field">
                     <div class="ui left icon input">
                         <i class="globe icon"></i>
-                        <input type="text" name="pages[]" required placeholder="Website (e.g. www.my-page.io)">
+                        <input type="text" name="page" required placeholder="Website (e.g. www.my-page.io)">
                     </div>
                 </div>
             </div>
@@ -116,12 +116,12 @@
             <div class="inline fields" id="radio-buttons">
                 <label>Send me results:</label>
                 <div class="field">
-                      <input type="radio" name="public" id="send-frequency-one-time">
-                      <label for="send-frequency-one-time">One Time</label>
+                      <input type="radio" name="schedule_mode" value="one-off" id="schedule-mode-one-off" checked>
+                      <label for="schedule-mode-one-off">One Time</label>
                 </div>
                 <div class="field">
-                      <input type="radio" name="public" id="send-frequency-every-month">
-                      <label for="send-frequency-every-month">Every month</label>
+                      <input type="radio" name="schedule_mode" value="weekly" id="schedule-mode-weekly">
+                      <label for="schedule-mode-weekly">Every week</label>
                 </div>
             </div>
             <p><smalL>You can also leave e-mail empty and check back here in ~5-30 Minutes</smalL></p>
@@ -143,6 +143,7 @@
 </div>
 </div>
 
+<!-- legacy
 <div id="clonable-input-container" style="display: none;">
     <div class="field">
         <div class="ui left icon input">
@@ -152,5 +153,6 @@
         </div>
     </div>
 </div>
+ -->
 <script data-domain="website-tester.green-coding.io" data-api="https://worker-spring-sunset-f89b.arne5926.workers.dev/jovvvvvse" src="https://worker-spring-sunset-f89b.arne5926.workers.dev/worker/script.outbound-links.js" defer></script>
 </body></html>
