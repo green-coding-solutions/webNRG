@@ -16,7 +16,7 @@ function normalizeUrl(url) {
 
 // Function to fetch data from the API and output JSON
 async function fetchData() {
-    const apiUrl = 'https://api.green-coding.io/v2/runs?uri=https%3A%2F%2Fgithub.com%2Fgreen-coding-solutions%2Fgreen-metrics-tool&filename=templates%2Fwebsite%2Fusage_scenario.yml&limit=10';
+    const apiUrl = 'https://api.green-coding.io/v2/runs?uri=https%3A%2F%2Fgithub.com%2Fgreen-coding-solutions%2Fgreen-metrics-tool&filename=templates%2Fwebsite%2Fusage_scenario.yml&failed=false&limit=10';
 
     try {
         const  response = await fetch(apiUrl);
@@ -77,7 +77,7 @@ function removeField(button) {
             if (json == undefined) return; // happens if request ist 204
             const data = json.data
             const uuid = data['comparison_identifiers'][0]
-            console.log(data['data']['[RUNTIME]']);
+
             let cpu_energy = data['data']['[RUNTIME]']['cpu_energy_rapl_msr_component']['data']['Package_0']['data'][uuid]['mean']
             const total_duration = data['data']['[RUNTIME]']['phase_time_syscall_system']['data']['[SYSTEM]']['data'][uuid]['mean']
             const network_transfer = data['data']['[RUNTIME]']['network_io_cgroup_container']['data']['gcb-playwright']['data'][uuid]['mean']
@@ -95,19 +95,19 @@ function removeField(button) {
                 energy_color = 'red'
             } else if (cpu_energy >= 80) {
                 energy_class = 'E';
-                energy_color = 'darkorange'
+                energy_color = 'orange'
             } else if (cpu_energy >= 60) {
                 energy_class = 'D';
-                energy_color = 'orange'
+                energy_color = 'yellow'
             } else if (cpu_energy >= 40) {
                 energy_class = 'C';
-                energy_color = 'gold'
+                energy_color = 'teal'
             } else if (cpu_energy >= 20) {
                 energy_class = 'B';
-                energy_color = 'green'
+                energy_color = 'olive'
             } else if (cpu_energy > 0 && cpu_energy < 20) {
                 energy_class = 'A';
-                energy_color = 'limegreen'
+                energy_color = 'green'
             } else {
                 energy_class = 'N/A';
                 energy_color = 'purple'
@@ -118,19 +118,19 @@ function removeField(button) {
                 network_carbon_color = 'red'
             } else if (network_carbon >= 0.8) {
                 network_carbon_class = 'E';
-                network_carbon_color = 'darkorange'
+                network_carbon_color = 'orange'
             } else if (network_carbon >= 0.6) {
                 network_carbon_class = 'D';
-                network_carbon_color = 'orange'
+                network_carbon_color = 'yellow'
             } else if (network_carbon >= 0.4) {
                 network_carbon_class = 'C';
-                network_carbon_color = 'gold'
+                network_carbon_color = 'teal'
             } else if (network_carbon >= 0.2) {
                 network_carbon_class = 'B';
-                network_carbon_color = 'green'
+                network_carbon_color = 'olive'
             } else if (network_carbon > 0 && network_carbon < 0.2) {
                 network_carbon_class = 'A';
-                network_carbon_color = 'limegreen'
+                network_carbon_color = 'green'
             } else {
                 network_carbon_class = 'N/A';
                 network_carbon_color = 'purple'
@@ -138,36 +138,30 @@ function removeField(button) {
 
             document.querySelector('#websites').insertAdjacentHTML(
                 'beforeend',
-                `<div class="ui yellow segment"><a class="ui label" href="https://metrics.green-coding.io/stats.html?id=${runs_data[idx][0]}">${runs_data[idx][1]} - (${(new Date(runs_data[idx][4])).toLocaleDateString(navigator.language, { year: 'numeric', month: 'short', day: 'numeric' })}) <i class="external alternate icon"></i></a>
+                `<div class="ui yellow segment"><a class="ui label" href="https://metrics.green-coding.io/stats.html?id=${runs_data[idx][0]}">${truncate(runs_data[idx][7]['__GMT_VAR_PAGE__'])} - (${(new Date(runs_data[idx][4])).toLocaleDateString(navigator.language, { year: 'numeric', month: 'short', day: 'numeric' })}) <i class="external alternate icon"></i></a>
                     <hr>
                     <div class="badge-container">
-                        <svg width="400px" height="120px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 450">
-                            <a href="http://metrics.green-coding.io/stats.html?id=${runs_data[idx][0]}#RUNTIME__Browse%20to%20and%20idle" target='_blank' rel='noopener'>
+<a href="http://metrics.green-coding.io/stats.html?id=${runs_data[idx][0]}#RUNTIME__Browse%20to%20and%20idle" target='_blank' rel='noopener'>
+                <div class="ui label" style="
+                        display: inline-block;
+                        display: inline-flex;
 
-                                <rect x="0" y="0" width="1000" height="75" fill="#333"></rect>
-                                <text x="500" y="38" font-size="50" fill="white" text-anchor="middle" dominant-baseline="middle">${truncate(runs_data[idx][7]['__GMT_VAR_PAGE__'])}</text>
-
-                                <!-- Center bars -->
-                                <rect x="200" y="75" width="600" height="150" fill="${energy_color}"></rect>
-                                <rect x="200" y="225" width="600" height="150" fill="${network_carbon_color}"></rect>
-
-
-                                <!-- Left green box with A -->
-                                <rect x="0" y="75" width="200" height="300" fill="${energy_color}"></rect>
-                                <text x="100" y="250" font-size="200" fill="white" text-anchor="middle" dominant-baseline="middle">${energy_class}</text>
-                                <text x="225" y="150" font-size="40" fill="white" text-anchor="left" dominant-baseline="middle">Energy (Browser): ${cpu_energy} Wh</text>
-
-                                <!-- Right red box with B -->
-                                <rect x="800" y="75" width="200" height="300" fill="${network_carbon_color}"></rect>
-                                <text x="900" y="250" font-size="200" fill="white" text-anchor="middle" dominant-baseline="middle">${network_carbon_class}</text>
-                                <text x="225" y="300" font-size="40" fill="white" text-anchor="left" dominant-baseline="middle">Carbon (Network): ${network_carbon} gCO2</text>
-
-                                <!-- Link -->
-                                <rect x="0" y="375" width="1000" height="75" fill="#333"></rect>
-                                <text x="500" y="415" font-size="50" fill="white" text-anchor="middle" dominant-baseline="middle">${(new Date(runs_data[idx][4])).toLocaleDateString(navigator.language, { year: 'numeric', month: 'short', day: 'numeric' })}</text>
-                            </a>
-                        </svg>
-
+                        gap: 16px;
+                    ">
+                        <div>
+                    <div class="ui ${energy_color} label" style="margin-left: 13px; margin-bottom: 3px;"> ${energy_class} </div>
+                        <div>Rendering</div>
+                     </div>
+                       <div>
+                    <div class="ui ${network_carbon_color} label" style="
+                        margin-left: 25px;
+                        margin-bottom: 3px;
+                    "> ${network_carbon_class}
+                          </div>
+                           <div>Network Data</div>
+                            </div>
+                        </div>
+                </a>
                     </div>
                 </div>`,
             );
