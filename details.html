@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <!-- Site Properties -->
+    <title>webNRG - Measure energy and CO2 cost of your website</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="favicon-16x16.png" sizes="16x16">
+    <link rel="icon" href="favicon-32x32.png" sizes="32x32">
+    <meta name="description" content="Measure the actual energy cost and CO2 emissions that the browser produces when accessing and rendering your website">
+    <link rel="stylesheet" type="text/css" class="ui" href="dist/css/semantic_reduced.min.css">
+    <style type="text/css">
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #363946;
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            body {
+                background-color: #fff;
+            }
+        }
+
+        body > .grid {
+            height: 100%;
+        }
+        body {
+            margin-top: min(100px, 5vh);
+        }
+        .column {
+            max-width: 950px;
+        }
+
+        #radio-buttons .field label {
+            font-weight: normal;
+        }
+
+        div[class*="left aligned"] {
+            text-align: left;
+        }
+
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .badge-container a {
+            display: flex;
+        }
+
+        .badge-container img {
+            height: auto;
+            max-width: 350px;
+        }
+    </style>
+    <script type="text/javascript" src="shared.js" defer></script>
+    <script type="text/javascript" src="details.js" defer></script>
+</head>
+<body>
+
+    <div class="ui center aligned grid">
+        <div class="column">
+            <h2 class="ui image header">
+                <img src="gc.png" class="image">
+                <div class="content" style="color: #3d936f; font-size: 70px; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;">WebNRG⚡️</div>
+            </h2>
+            <div class="ui left aligned warning message">
+                <i class="close icon"></i>
+                <div class="content">
+                    <div class="ui header">
+                        What? websites produce carbon emissions?
+                    </div>
+                    <hr>
+                    <p>Websites emit carbon through three factors: <b>Hosting</b>, <b>Network Traffic</b> and <b>User Viewing</b></p>
+                    <p>While <a href="https://www.thegreenwebfoundation.org/">others look at green hosting</a> we created <b>webNRG</b> to measure <b>Network Traffic</b> and the power consumption while <b>Viewing</b> the page.</p>
+                    <p>Check your site now and find out how emission your website creates for a <b>typical 10k users per month</b>!</p>
+                </div>
+            </div>
+            <div class="ui stacked segment left aligned">
+            <h1 class="ui massive teal ribbon label website-name"></h1><p style="margin-left: 0; text-align: left;">Tested on <span class="website-data"></span></p>
+            <hr>
+            <div style="display: flex; gap: 20px;"><div><span class="ui massive label website-energy-class"></span></div>
+            <div>
+                <h2 style="
+                display: inline-block;
+                margin-bottom: 0px;
+                ">Rendering Energy</h2>
+                <p>The CPU power consumption for rendering was  <span class="ui label website-power"></span></p>
+                <p>With a visit time of<span class="ui label website-duration"></span> this equates to <span class="ui label website-energy"></span></p>
+                <p>If you have 10.000 people visiting your page per month this would consume <span class="ui label website-energy-10k"></span> of energy</p>
+
+            </div>
+        </div>
+        <hr>
+        <div style="display: flex; gap: 20px;"><div><span class="ui massive label website-network-data-class"></span></div>
+        <div>
+            <h2 style="display: inline-block; margin-bottom: 0px;">Network Data</h2><p>The network data transfer the website was <span class="ui label website-network-data"></span> for loading and staying on the page for <span class="ui label website-duration"></span></p>
+            <p>Assuming you have 10,000 visitors per month in your page this and the site runs on fossil energy this would equate to <span class="ui label website-network-carbon-10k"></p>
+        </div>
+
+
+    </div>
+
+</div>
+
+</div>
+</div>
+
+<!-- legacy
+<div id="clonable-input-container" style="display: none;">
+    <div class="field">
+        <div class="ui left icon input">
+            <i class="globe icon"></i>
+            <input type="text" name="pages[]" placeholder="Next page (e.g. www.my-page.io/step2)">
+            <a class="ui left icon label red" style="line-height: 22px;" onclick="removeField(this)">Delete</a>
+        </div>
+    </div>
+</div>
+-->
+<script data-domain="website-tester.green-coding.io" data-api="https://worker-spring-sunset-f89b.arne5926.workers.dev/jovvvvvse" src="https://worker-spring-sunset-f89b.arne5926.workers.dev/worker/script.outbound-links.js" defer></script>
+</body></html>
