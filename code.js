@@ -16,7 +16,7 @@ function normalizeUrl(url) {
 
 // Function to fetch data from the API and output JSON
 async function fetchData() {
-    const apiUrl = 'https://api.green-coding.io/v2/runs?uri=https%3A%2F%2Fgithub.com%2Fgreen-coding-solutions%2Fgreen-metrics-tool&filename=templates%2Fwebsite%2Fusage_scenario.yml&failed=false&limit=10';
+    const apiUrl = 'https://api.green-coding.io/v2/runs?uri=https%3A%2F%2Fgithub.com%2Fgreen-coding-solutions%2Fgreen-metrics-tool&filename=templates%2Fwebsite%2Fusage_scenario_cached.yml&failed=false&limit=10';
 
     try {
         const  response = await fetch(apiUrl);
