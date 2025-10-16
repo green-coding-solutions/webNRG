@@ -78,9 +78,9 @@ function removeField(button) {
             const data = json.data
             const uuid = data['comparison_identifiers'][0]
 
-            let cpu_energy = data['data']['[RUNTIME]']['cpu_energy_rapl_msr_component']['data']['Package_0']['data'][uuid]['mean']
-            const total_duration = data['data']['[RUNTIME]']['phase_time_syscall_system']['data']['[SYSTEM]']['data'][uuid]['mean']
-            const network_transfer = data['data']['[RUNTIME]']['network_io_cgroup_container']['data']['playwright-nodejs']['data'][uuid]['mean']
+            let cpu_energy = data['data']['[RUNTIME]']['data']['cpu_energy_rapl_msr_component']['data']['Package_0']['data'][uuid]['mean']
+            const total_duration = data['data']['[RUNTIME]']['data']['phase_time_syscall_system']['data']['[SYSTEM]']['data'][uuid]['mean']
+            const network_transfer = data['data']['[RUNTIME]']['data']['network_io_cgroup_container']['data']['playwright-nodejs']['data'][uuid]['mean']
 
             cpu_energy = ((((cpu_energy * 0.000001) / (total_duration / 1000000)) * 10_000) / 1_000).toFixed(2)
             const network_carbon = (((network_transfer / 1e9) * 0.06)*300*10000).toFixed(2)
