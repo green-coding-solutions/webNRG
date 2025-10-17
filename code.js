@@ -75,20 +75,21 @@ function removeField(button) {
         let idx = 0;
         phase_stats_data.forEach(json => {
             if (json == undefined) return; // happens if request ist 204
-            const data = json.data
-            const uuid = data?.['comparison_identifiers']?.[0]
+            const data = json.data;
+            const uuid = data?.['comparison_identifiers']?.[0];
 
-            let cpu_energy = data?.['data']?.['?.[RUNTIME]']?.['data']?.['cpu_energy_rapl_msr_component']?.['data']?.['Package_0']?.['data']?.[uuid]?.['mean']
-            const total_duration = data?.['data']?.['?.[RUNTIME]']?.['data']?.['phase_time_syscall_system']?.['data']?.['?.[SYSTEM]']?.['data']?.[uuid]?.['mean']
-            const network_transfer = data?.['data']?.['?.[RUNTIME]']?.['data']?.['network_io_cgroup_container']?.['data']?.['gmt-playwright-nodejs']?.['data']?.[uuid]?.['mean']
+            let cpu_energy = data?.['data']?.['?.[RUNTIME]']?.['data']?.['cpu_energy_rapl_msr_component']?.['data']?.['Package_0']?.['data']?.[uuid]?.['mean'];
+            const total_duration = data?.['data']?.['?.[RUNTIME]']?.['data']?.['phase_time_syscall_system']?.['data']?.['?.[SYSTEM]']?.['data']?.[uuid]?.['mean'];
+            const network_transfer = data?.['data']?.['?.[RUNTIME]']?.['data']?.['network_io_cgroup_container']?.['data']?.['gmt-playwright-nodejs']?.['data']?.[uuid]?.['mean'];
 
-            cpu_energy = ((((cpu_energy * 0.000001) / (total_duration / 1000000)) * 10_000) / 1_000).toFixed(2)
-            const network_carbon = (((network_transfer / 1e9) * 0.06)*300*10000).toFixed(2)
+            cpu_power = (cpu_energy/total_duration).toFixed(2);
+            const network_carbon = (((network_transfer / 1e9) * 0.06)*300*10000).toFixed(2);
 
-            let energy_class
-            let energy_color
-            let network_carbon_class
-            let network_carbon_color
+
+            let energy_class;
+            let energy_color;
+            let network_carbon_class;
+            let network_carbon_color;
 
             if (cpu_energy > 100) {
                 energy_class = 'F';
