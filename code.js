@@ -141,7 +141,7 @@ function removeField(button) {
                 `<div class="ui yellow segment"><a class="ui label" href="https://metrics.green-coding.io/stats.html?id=${runs_data[idx][0]}">${truncate(runs_data[idx][7]['__GMT_VAR_PAGE__'])} - (${(new Date(runs_data[idx][4])).toLocaleDateString(navigator.language, { year: 'numeric', month: 'short', day: 'numeric' })}) <i class="external alternate icon"></i></a>
                     <hr>
                     <div class="badge-container">
-<a href="http://metrics.green-coding.io/stats.html?id=${runs_data[idx][0]}#RUNTIME__Browse%20to%20and%20idle" target='_blank' rel='noopener'>
+<a href="http://metrics.green-coding.io/stats.html?id=${runs_data[idx][0]}" target='_blank' rel='noopener'>
                 <div class="ui label" style="
                         display: inline-block;
                         display: inline-flex;
