@@ -84,61 +84,61 @@ function removeField(button) {
             const network_transfer = data?.['data']?.['[RUNTIME]']?.['data']?.['network_total_cgroup_container']?.['data']?.['gmt-playwright-nodejs']?.['data']?.[uuid]?.['mean'];
             const network_transfer_kb = network_transfer/1000;
 
-            let energy_class;
-            let energy_color;
-            let network_carbon_class;
-            let network_carbon_color;
+            let power_class;
+            let power_color;
+            let network_transfer_class;
+            let network_transfer_color;
 
             const machine_idle_power = 6.6
 
             if (cpu_power_W > machine_idle_power*1.2) {
-                energy_class = 'F';
-                energy_color = 'red'
+                power_class = 'F';
+                power_color = 'red'
             } else if (cpu_power_W >= machine_idle_power*1.2) {
-                energy_class = 'E';
-                energy_color = 'orange'
+                power_class = 'E';
+                power_color = 'orange'
             } else if (cpu_power_W >= machine_idle_power*1.15) {
-                energy_class = 'D';
-                energy_color = 'yellow'
+                power_class = 'D';
+                power_color = 'yellow'
             } else if (cpu_power_W >= machine_idle_power*1.1) {
-                energy_class = 'C';
-                energy_color = 'teal'
+                power_class = 'C';
+                power_color = 'teal'
             } else if (cpu_power_W >= machine_idle_power*1.05) {
-                energy_class = 'B';
-                energy_color = 'olive'
+                power_class = 'B';
+                power_color = 'olive'
             } else if (cpu_power_W > 0 && cpu_power_W < machine_idle_power*1.05) {
-                energy_class = 'A';
-                energy_color = 'green'
+                power_class = 'A';
+                power_color = 'green'
             } else {
-                energy_class = 'N/A';
-                energy_color = 'purple'
+                power_class = 'N/A';
+                power_color = 'purple'
             }
 
             // we mimic the SWD model: https://sustainablewebdesign.org/digital-carbon-ratings
             if (network_transfer_kb > 0 && network_transfer_kb < 272.51) {
-                network_carbon_class = 'A+';
-                network_carbon_color = 'green'
+                network_transfer_class = 'A+';
+                network_transfer_color = 'green'
             } else if (network_transfer_kb <= 531.15) {
-                network_carbon_class = 'A';
-                network_carbon_color = 'green'
+                network_transfer_class = 'A';
+                network_transfer_color = 'green'
             } else if (network_transfer_kb <= 975.85) {
-                network_carbon_class = 'B';
-                network_carbon_color = 'olive'
+                network_transfer_class = 'B';
+                network_transfer_color = 'olive'
             } else if (network_transfer_kb <= 1410.39) {
-                network_transfer_kb_class = 'C';
-                network_transfer_kb_color = 'teal'
+                network_transfer_class = 'C';
+                network_transfer_color = 'teal'
             } else if (network_transfer_kb <= 1875.01) {
-                network_transfer_kb_class = 'D';
-                network_transfer_kb_color = 'yellow'
+                network_transfer_class = 'D';
+                network_transfer_color = 'yellow'
             } else if (network_transfer_kb <= 2419.56) {
-                network_transfer_kb_class = 'E';
-                network_transfer_kb_color = 'orange'
+                network_transfer_class = 'E';
+                network_transfer_color = 'orange'
             } else if (network_transfer_kb > 2419.56) {
-                network_transfer_kb_class = 'F';
-                network_transfer_kb_color = 'red'
+                network_transfer_class = 'F';
+                network_transfer_color = 'red'
             } else {
-                network_carbon_class = 'N/A';
-                network_carbon_color = 'purple'
+                network_transfer_class = 'N/A';
+                network_transfer_color = 'purple'
             }
 
             document.querySelector('#websites').insertAdjacentHTML(
@@ -154,14 +154,14 @@ function removeField(button) {
                         gap: 16px;
                     ">
                         <div>
-                    <div class="ui ${energy_color} label" style="margin-left: 13px; margin-bottom: 3px;"> ${energy_class} </div>
+                    <div class="ui ${power_color} label" style="margin-left: 13px; margin-bottom: 3px;"> ${power_class} </div>
                         <div>Rendering</div>
                      </div>
                        <div>
-                    <div class="ui ${network_carbon_color} label" style="
+                    <div class="ui ${network_transfer_color} label" style="
                         margin-left: 25px;
                         margin-bottom: 3px;
-                    "> ${network_carbon_class}
+                    "> ${network_transfer_class}
                           </div>
                            <div>Network Data</div>
                             </div>
