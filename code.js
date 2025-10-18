@@ -72,8 +72,7 @@ function removeField(button) {
             console.error('Error fetching data:', error);
             return
         }
-        let idx = 0;
-        phase_stats_data.forEach(json => {
+        phase_stats_data.forEach((json, idx) => {
             if (json == undefined) return; // happens if request ist 204
             const data = json.data;
             const uuid = data?.['comparison_identifiers']?.[0];
@@ -170,7 +169,6 @@ function removeField(button) {
                     </div>
                 </div>`,
             );
-            idx++;
         });
 
         // Prevent form submission (for demonstration purposes)
