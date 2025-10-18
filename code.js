@@ -80,10 +80,10 @@ function removeField(button) {
 
             let cpu_energy = data?.['data']?.['[RUNTIME]']?.['data']?.['cpu_energy_rapl_msr_component']?.['data']?.['Package_0']?.['data']?.[uuid]?.['mean'];
             const total_duration = data?.['data']?.['[RUNTIME]']?.['data']?.['phase_time_syscall_system']?.['data']?.['?.[SYSTEM]']?.['data']?.[uuid]?.['mean'];
-            const network_transfer = data?.['data']?.['[RUNTIME]']?.['data']?.['network_io_cgroup_container']?.['data']?.['gmt-playwright-nodejs']?.['data']?.[uuid]?.['mean'];
+            const network_transfer = data?.['data']?.['[RUNTIME]']?.['data']?.['network_total_cgroup_container']?.['data']?.['gmt-playwright-nodejs']?.['data']?.[uuid]?.['mean'];
+            const network_transfer_kb = network_transfer/1000;
 
             const cpu_power = (cpu_energy/total_duration).toFixed(2);
-            const network_carbon = (((network_transfer / 1e9) * 0.06)*300*10000).toFixed(2);
 
 
             let energy_class;
@@ -114,24 +114,28 @@ function removeField(button) {
                 energy_color = 'purple'
             }
 
-            if (network_carbon > 1) {
-                network_carbon_class = 'F';
-                network_carbon_color = 'red'
-            } else if (network_carbon >= 0.8) {
-                network_carbon_class = 'E';
-                network_carbon_color = 'orange'
-            } else if (network_carbon >= 0.6) {
-                network_carbon_class = 'D';
-                network_carbon_color = 'yellow'
-            } else if (network_carbon >= 0.4) {
-                network_carbon_class = 'C';
-                network_carbon_color = 'teal'
-            } else if (network_carbon >= 0.2) {
-                network_carbon_class = 'B';
-                network_carbon_color = 'olive'
-            } else if (network_carbon > 0 && network_carbon < 0.2) {
+            // we mimic the SWD model: https://sustainablewebdesign.org/digital-carbon-ratings
+            if (network_transfer_kb > 0 && network_transfer_kb < 272.51) {
+                network_carbon_class = 'A+';
+                network_carbon_color = 'green'
+            } else if (network_transfer_kb <= 531.15) {
                 network_carbon_class = 'A';
                 network_carbon_color = 'green'
+            } else if (network_transfer_kb <= 975.85) {
+                network_carbon_class = 'B';
+                network_carbon_color = 'olive'
+            } else if (network_transfer_kb <= 1410.39) {
+                network_transfer_kb_class = 'C';
+                network_transfer_kb_color = 'teal'
+            } else if (network_transfer_kb <= 1875.01) {
+                network_transfer_kb_class = 'D';
+                network_transfer_kb_color = 'yellow'
+            } else if (network_transfer_kb <= 2419.56) {
+                network_transfer_kb_class = 'E';
+                network_transfer_kb_color = 'orange'
+            } else if (network_transfer_kb > 2419.56) {
+                network_transfer_kb_class = 'F';
+                network_transfer_kb_color = 'red'
             } else {
                 network_carbon_class = 'N/A';
                 network_carbon_color = 'purple'
