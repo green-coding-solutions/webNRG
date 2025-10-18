@@ -78,35 +78,35 @@ function removeField(button) {
             const data = json.data;
             const uuid = data?.['comparison_identifiers']?.[0];
 
-            let cpu_energy = data?.['data']?.['[RUNTIME]']?.['data']?.['cpu_energy_rapl_msr_component']?.['data']?.['Package_0']?.['data']?.[uuid]?.['mean'];
+            const cpu_power = data?.['data']?.['[RUNTIME]']?.['data']?.['cpu_power_rapl_msr_component']?.['data']?.['Package_0']?.['data']?.[uuid]?.['mean'];
+            const cpu_power_W = cpu_power / 1_000;
             const total_duration = data?.['data']?.['[RUNTIME]']?.['data']?.['phase_time_syscall_system']?.['data']?.['?.[SYSTEM]']?.['data']?.[uuid]?.['mean'];
             const network_transfer = data?.['data']?.['[RUNTIME]']?.['data']?.['network_total_cgroup_container']?.['data']?.['gmt-playwright-nodejs']?.['data']?.[uuid]?.['mean'];
             const network_transfer_kb = network_transfer/1000;
-
-            const cpu_power = (cpu_energy/total_duration).toFixed(2);
-
 
             let energy_class;
             let energy_color;
             let network_carbon_class;
             let network_carbon_color;
 
-            if (cpu_energy > 100) {
+            const machine_idle_power = 6.6
+
+            if (cpu_power_W > machine_idle_power*1.2) {
                 energy_class = 'F';
                 energy_color = 'red'
-            } else if (cpu_energy >= 80) {
+            } else if (cpu_power_W >= machine_idle_power*1.2) {
                 energy_class = 'E';
                 energy_color = 'orange'
-            } else if (cpu_energy >= 60) {
+            } else if (cpu_power_W >= machine_idle_power*1.15) {
                 energy_class = 'D';
                 energy_color = 'yellow'
-            } else if (cpu_energy >= 40) {
+            } else if (cpu_power_W >= machine_idle_power*1.1) {
                 energy_class = 'C';
                 energy_color = 'teal'
-            } else if (cpu_energy >= 20) {
+            } else if (cpu_power_W >= machine_idle_power*1.05) {
                 energy_class = 'B';
                 energy_color = 'olive'
-            } else if (cpu_energy > 0 && cpu_energy < 20) {
+            } else if (cpu_power_W > 0 && cpu_power_W < machine_idle_power*1.05) {
                 energy_class = 'A';
                 energy_color = 'green'
             } else {
