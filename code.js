@@ -82,7 +82,7 @@ function removeField(button) {
             const total_duration = data?.['data']?.['[RUNTIME]']?.['data']?.['phase_time_syscall_system']?.['data']?.['?.[SYSTEM]']?.['data']?.[uuid]?.['mean'];
             const network_transfer = data?.['data']?.['[RUNTIME]']?.['data']?.['network_io_cgroup_container']?.['data']?.['gmt-playwright-nodejs']?.['data']?.[uuid]?.['mean'];
 
-            cpu_power = (cpu_energy/total_duration).toFixed(2);
+            const cpu_power = (cpu_energy/total_duration).toFixed(2);
             const network_carbon = (((network_transfer / 1e9) * 0.06)*300*10000).toFixed(2);
 
 
