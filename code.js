@@ -127,6 +127,9 @@ function removeField(button) {
                 network_transfer_html = 'N/A';
             }
 
+            let usage_scenario_variables = Object.entries(runs_data[idx][7]).map(([k, v]) => typeof(v) == 'number' ? `"${k}": ${v}` : `"${k}": ${JSON.stringify(v)}`).join(', ')
+            usage_scenario_variables = `{${usage_scenario_variables}}`
+
             const html_content = `
                 <tr>
                     <td class="single line">${truncate(runs_data[idx][7]['__GMT_VAR_PAGE__'])}</td>
@@ -138,7 +141,7 @@ function removeField(button) {
                         ${network_transfer_html}
                     </td>
                     <td>
-                        <a href="https://metrics.green-coding.io/timeline.html?uri=https%3A%2F%2Fgithub.com%2Fgreen-coding-solutions%2Fgreen-metrics-tool&amp;branch=main&amp;machine_id=6&amp;filename=templates%2Fwebsite%2Fusage_scenario_cached.yml&amp;metrics=key" class="ui teal horizontal label  no-wrap"><i class="ui icon clock"></i>History &nbsp;</a>
+                        <a href="https://metrics.green-coding.io/timeline.html?uri=https%3A%2F%2Fgithub.com%2Fgreen-coding-solutions%2Fgreen-metrics-tool&amp;branch=main&amp;machine_id=6&amp;filename=templates%2Fwebsite%2Fusage_scenario_cached.yml&amp;usage_scenario_variables=${encodeURIComponent(usage_scenario_variables)}&amp;metrics=key" class="ui teal horizontal label  no-wrap"><i class="ui icon clock"></i>History &nbsp;</a>
                     </td>
                     <td>
                         <a class="ui button" href="https://metrics.green-coding.io/stats.html?id=${runs_data[idx][0]}" target='_blank' rel='noopener'>Details</a>
