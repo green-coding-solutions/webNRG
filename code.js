@@ -10,30 +10,31 @@ function normalizeUrl(url) {
     const hasProtocol = /^https?:\/\//i.test(url);
     const fullUrl = hasProtocol ? url : 'https://' + url;
     new URL(fullUrl); // will throw if invalid
-    return fullUrl;
+    return fullUrl.replace(/\/+$/, ""); // remove trailing slashes
 }
 
 
 // Function to fetch data from the API and output JSON
-async function fetchData() {
-    const apiUrl = 'https://api.green-coding.io/v2/runs?uri=https%3A%2F%2Fgithub.com%2Fgreen-coding-solutions%2Fgreen-metrics-tool&filename=templates%2Fwebsite%2Fusage_scenario_cached.yml&failed=false&limit=10';
+async function fetchData(limit=10, usage_scenario_variables='') {
+    const apiUrl = `https://api.green-coding.io/v2/runs?uri=https%3A%2F%2Fgithub.com%2Fgreen-coding-solutions%2Fgreen-metrics-tool&filename=templates%2Fwebsite%2Fusage_scenario_cached.yml&failed=false&usage_scenario_variables=${encodeURIComponent(usage_scenario_variables)}&limit=${limit}`;
 
-    try {
-        const  response = await fetch(apiUrl);
 
+    let json_response;
+    return (await fetch(apiUrl)
+    .then(response => {
         if (!response.ok) {
-            alert('Could not fetch list with last tested websites from API.')
             console.error('Error fetching data:', response);
             return
         }
+        if (response.status == 204) {
+            // 204 responses use no body, so json() call would fail
+            console.log('No data to display. API returned empty response (HTTP 204)')
+            return
+        }
 
-        const response_body = await response.json();
-        return response_body.data
+        return response.json()
+    }))?.data
 
-    } catch (error) {
-        alert('Could not fetch data with last runs from API.')
-        console.error('Error fetching data:', error);
-  }
 }
 
 /* Legacy
@@ -61,7 +62,10 @@ function removeField(button) {
 
         let phase_stats_data;
         const runs_data = await fetchData();
-        if (runs_data == undefined) return;
+        if (runs_data == undefined) {
+            alert('Could not fetch list with last tested websites from API.')
+            return
+        }
 
         const urls = runs_data.map(el => fetch(`https://api.green-coding.io/v1/phase_stats/single/${el[0]}`))
         try {
@@ -154,11 +158,19 @@ function removeField(button) {
         document.querySelector('#page-form').onsubmit = async function(e) {
             e.preventDefault();
             const formData = new FormData(this);
+            const normalized_url = normalizeUrl(formData.get('page'));
+
+            // first we check if we already have a run in the last 30 days for this
+            const last_run = await fetchData(1, normalized_url);
+            if (last_run != null) {
+                alert('We already have a run for this URL in the last 30 days - You will now be redirected to the details page');
+                window.location = `/details.html?page=${encodeURIComponent(normalized_url)}
+            }
 
             try {
                 var dataToSend = {
                     email: formData.get('email'),
-                    page: normalizeUrl(formData.get('page')),
+                    page: normalized_url,
                     mode: 'website',
                     schedule_mode: formData.get('schedule_mode'),
                 };
