@@ -1,159 +1,105 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <!-- Site Properties -->
+    <title>webNRG - Measure energy and CO2 cost of your website</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="favicon-16x16.png" sizes="16x16">
+    <link rel="icon" href="favicon-32x32.png" sizes="32x32">
+    <meta name="description" content="Measure the actual energy cost and CO2 emissions that the browser produces when accessing and rendering your website">
+    <link rel="stylesheet" type="text/css" class="ui" href="dist/css/semantic_reduced.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="code.js" defer></script>
+</head>
 
-        <!-- Site Properties -->
-        <title>webNRG - Measure energy and CO2 cost of your website</title>
-        <link rel="shortcut icon" href="/favicon.ico">
-        <link rel="icon" href="favicon.ico">
-        <link rel="icon" href="favicon-16x16.png" sizes="16x16">
-        <link rel="icon" href="favicon-32x32.png" sizes="32x32">
-        <meta name="description" content="Measure the actual energy cost and CO2 emissions that the browser produces when accessing and rendering your website">
-        <link rel="stylesheet" type="text/css" class="ui" href="dist/css/semantic_reduced.min.css">
-        <style type="text/css">
-            @media (prefers-color-scheme: dark) {
-                body {
-                    background-color: #363946;
-                }
-            }
-
-            @media (prefers-color-scheme: light) {
-                body {
-                    background-color: #fff;
-                }
-            }
-
-            body > .grid {
-                height: 100%;
-            }
-            body {
-                margin-top: min(100px, 5vh);
-            }
-            .column {
-                max-width: 950px;
-            }
-
-            #radio-buttons .field label {
-                font-weight: normal;
-            }
-
-            div[class*="left aligned"] {
-                text-align: left;
-            }
-
-            .badge-container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-wrap: wrap;
-                gap: 10px;
-                margin-top: 10px;
-            }
-
-            .badge-container a {
-                display: flex;
-            }
-
-            .badge-container img {
-                height: auto;
-                max-width: 350px;
-            }
-        </style>
-        <script type="text/javascript" src="code.js" defer></script>
-    </head>
-    <body style="
-    /* width: 600px; */
-    ">
-
-    <div class="ui center aligned grid" style="
-    /* width: 864px !important; */
-    ">
-    <div class="column" style="
-    /* width: 600px !important; */
-    ">
-    <h2 class="ui image header">
-        <img src="gc.png" class="image">
-        <div class="content" style="color: #3d936f; font-size: 70px; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;">WebNRG⚡️</div>
-    </h2>
-    <div class="ui left aligned warning message">
-        <i class="close icon"></i>
-      <div class="content">
-        <div class="ui header">
-          What? websites produce carbon emissions?
-        </div>
-        <hr>
-        <p>Websites emit carbon through three factors: <b>Hosting</b>, <b>Network Traffic</b> and <b>User Viewing</b></p>
-        <p>While <a href="https://www.thegreenwebfoundation.org/">others look at green hosting</a> we created <b>webNRG</b> to measure <b>Network Traffic</b> and the power consumption while <b>Viewing</b> the page.</p>
-        <p>Check your site now and find out how emission your website creates for a <b>typical 10k users per month</b>!</p>
-      </div>
-    </div>
-    <div class="ui left aligned info message">
-        <i class="close icon"></i>
-      <div class="content">
-        <div class="ui header">
-          This project is still in beta
-        </div>
-        <hr>
-        <p>Project is still in beta. Numbers may be inaccurate. The project will be released end of October 2025.</p>
-      </div>
-    </div>
-    <form id="page-form" class="ui large form initial">
-        <div class="ui stacked segment">
-            <div id="inputs-container">
-                <div class="field">
-                    <div class="ui left icon input">
-                        <i class="globe icon"></i>
-                        <input type="text" name="page" required placeholder="Website (e.g. www.my-page.io)">
+<body>
+    <div class="ui center aligned grid">
+        <div class="column">
+            <h2 class="ui image header">
+                <img src="gc.png" class="image">
+                <div class="content" style="color: #3d936f; font-size: 70px; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;">WebNRG⚡️</div>
+            </h2>
+            <div class="ui left aligned warning message">
+                <i class="close icon"></i>
+                <div class="content">
+                    <div class="ui header">
+                        What? websites produce carbon emissions?
                     </div>
+                    <hr>
+                    <p>Websites emit carbon through three factors: <b>Hosting</b>, <b>Network Traffic</b> and <b>User Viewing</b></p>
+                    <p>While <a href="https://www.thegreenwebfoundation.org/">others look at green hosting</a> we created <b>webNRG</b> to measure <b>Network Traffic</b> and the power consumption while <b>Viewing</b> the page.</p>
+                    <p>Check your site now and find out how emission your website creates for a <b>typical 10k users per month</b>!</p>
                 </div>
             </div>
-<!--
+            <form id="page-form" class="ui large form initial">
+                <div class="ui stacked segment">
+                    <div id="inputs-container">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="globe icon"></i>
+                                <input type="text" name="page" required placeholder="Website (e.g. www.my-page.io)">
+                            </div>
+                        </div>
+                    </div>
+                    <!--
             <div class="spacer" style="height: 10px;"></div>
             <div class="field" style="text-align: right;">
                 <a class="ui left icon label add-page" onclick="addField()">+ Add a page </a>
             </div>
 -->
-            <div class="field">
-                <div class="ui left icon input">
-                    <i class="envelope icon"></i>
-                    <input type="email" name="email" placeholder="Your e-mail (optional. we ping you when measurement is done)">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="envelope icon"></i>
+                            <input type="email" name="email" placeholder="Your e-mail (optional. we ping you when measurement is done)">
+                        </div>
+                    </div>
+                    <div class="inline fields" id="radio-buttons">
+                        <label>Send me results:</label>
+                        <div class="field">
+                            <input type="radio" name="schedule_mode" value="one-off" id="schedule-mode-one-off" checked>
+                            <label for="schedule-mode-one-off">One Time</label>
+                        </div>
+                        <div class="field">
+                            <input type="radio" name="schedule_mode" value="weekly" id="schedule-mode-weekly">
+                            <label for="schedule-mode-weekly">Every week</label>
+                        </div>
+                    </div>
+                    <p><smalL>You can also leave e-mail empty and check back here in ~5-30 Minutes</smalL></p>
+                    <button class="ui fluid teal large submit button" style="background-color: #3d936f;">Measure</button>
                 </div>
-            </div>
-            <div class="inline fields" id="radio-buttons">
-                <label>Send me results:</label>
-                <div class="field">
-                      <input type="radio" name="schedule_mode" value="one-off" id="schedule-mode-one-off" checked>
-                      <label for="schedule-mode-one-off">One Time</label>
-                </div>
-                <div class="field">
-                      <input type="radio" name="schedule_mode" value="weekly" id="schedule-mode-weekly">
-                      <label for="schedule-mode-weekly">Every week</label>
-                </div>
-            </div>
-            <p><smalL>You can also leave e-mail empty and check back here in ~5-30 Minutes</smalL></p>
-
-            <button class="ui fluid teal large submit button" style="background-color: #3d936f;">Measure</button>
+                <div class="ui error message"></div>
+            </form>
+            <hr>
+            <h2 class="ui header">
+                <div class="ui content" style="color: #fff; margin-top:50px;">These are the most recent websites tested with webNRG</div>
+            </h2>
+            <table class="ui celled padded tablet stackable table">
+                <thead>
+                    <tr>
+                        <th>Url</th>
+                        <th>Last</th>
+                        <th>Rendering</th>
+                        <th class="single line">Network</th>
+                        <th>History</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="websites">
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="7" style="text-align:right;">See all runs and more details on our hosted service: <a href="https://metrics.green-coding.io/runs.html?&uri=green-coding-solutions/green-metrics-tool&filename=templates/website/usage_scenario_cached.yml&machine=Micro%20Benchmarking">Green Metics Tool</a></td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
-
-        <div class="ui error message"></div>
-
-    </form>
-    <hr>
-    <h2 class="ui header">
-        <div class="ui content" style="color: #fff; margin-top:50px;">These are the most recent websites tested with webNRG</div>
-    </h2>
-    <div id="websites">
-
-
     </div>
-</div>
-</div>
-
-<!-- legacy
+    <!-- legacy
 <div id="clonable-input-container" style="display: none;">
     <div class="field">
         <div class="ui left icon input">
@@ -164,5 +110,7 @@
     </div>
 </div>
  -->
-<script data-domain="website-tester.green-coding.io" data-api="https://worker-spring-sunset-f89b.arne5926.workers.dev/jovvvvvse" src="https://worker-spring-sunset-f89b.arne5926.workers.dev/worker/script.outbound-links.js" defer></script>
-</body></html>
+    <script data-domain="website-tester.green-coding.io" data-api="https://worker-spring-sunset-f89b.arne5926.workers.dev/jovvvvvse" src="https://worker-spring-sunset-f89b.arne5926.workers.dev/worker/script.outbound-links.js" defer></script>
+</body>
+
+</html>

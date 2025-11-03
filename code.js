@@ -83,92 +83,68 @@ function removeField(button) {
             const network_transfer = data?.['data']?.['[RUNTIME]']?.['data']?.['network_total_cgroup_container']?.['data']?.['gmt-playwright-nodejs']?.['data']?.[uuid]?.['mean'];
             const network_transfer_kb = network_transfer/1000;
 
-            let power_class;
-            let power_color;
-            let network_transfer_class;
-            let network_transfer_color;
+            let rendering_power_html;
+            let network_transfer_html;
 
-            const machine_idle_power = 6.6
+            const cpu_idle_power = 2.45
 
-            if (cpu_power_W > machine_idle_power*1.2) {
-                power_class = 'F';
-                power_color = 'red'
-            } else if (cpu_power_W >= machine_idle_power*1.2) {
-                power_class = 'E';
-                power_color = 'orange'
-            } else if (cpu_power_W >= machine_idle_power*1.15) {
-                power_class = 'D';
-                power_color = 'yellow'
-            } else if (cpu_power_W >= machine_idle_power*1.1) {
-                power_class = 'C';
-                power_color = 'teal'
-            } else if (cpu_power_W >= machine_idle_power*1.05) {
-                power_class = 'B';
-                power_color = 'olive'
-            } else if (cpu_power_W > 0 && cpu_power_W < machine_idle_power*1.05) {
-                power_class = 'A';
-                power_color = 'green'
+            if (cpu_power_W > cpu_idle_power*2.5) {
+                rendering_power_html = '<ul class="color-score"><li>A+</li><li>A</li><li>B</li><li>C</li><li>D</li><li>E</li><li class="color-score-current">F</li></ul>';
+            } else if (cpu_power_W >= cpu_idle_power*2.25) {
+                rendering_power_html = '<ul class="color-score"><li>A+</li><li>A</li><li>B</li><li>C</li><li>D</li><li class="color-score-current">E</li><li>F</li></ul>';
+            } else if (cpu_power_W >= cpu_idle_power*2) {
+                rendering_power_html = '<ul class="color-score"><li>A+</li><li>A</li><li>B</li><li>C</li><li class="color-score-current">D</li><li>E</li><li>F</li></ul>';
+            } else if (cpu_power_W >= cpu_idle_power*1.75) {
+                rendering_power_html = '<ul class="color-score"><li>A+</li><li>A</li><li>B</li><li class="color-score-current">C</li><li>D</li><li>E</li><li>F</li></ul>';
+            } else if (cpu_power_W >= cpu_idle_power*1.5) {
+                rendering_power_html = '<ul class="color-score"><li>A+</li><li>A</li><li class="color-score-current">B</li><li>C</li><li>D</li><li>E</li><li>F</li></ul>';
+            } else if (cpu_power_W >= cpu_idle_power*1.25) {
+                rendering_power_html = '<ul class="color-score"><li>A+</li><li class="color-score-current">A</li><li>B</li><li>C</li><li>D</li><li>E</li><li>F</li></ul>';
+            } else if (cpu_power_W > 0 && cpu_power_W < cpu_idle_power*1.25) {
+                rendering_power_html = '<ul class="color-score"><li class="color-score-current">A+</li><li>A</li><li>B</li><li>C</li><li>D</li><li>E</li><li>F</li></ul>';
             } else {
-                power_class = 'N/A';
-                power_color = 'purple'
+                console.error('Could not determine rendering power for ', runs_data[idx][7]['__GMT_VAR_PAGE__'], '. Value: ', cpu_power_W);
+                rendering_power_html = 'N/A';
             }
 
             // we mimic the SWD model: https://sustainablewebdesign.org/digital-carbon-ratings
             if (network_transfer_kb > 0 && network_transfer_kb < 272.51) {
-                network_transfer_class = 'A+';
-                network_transfer_color = 'green'
+                network_transfer_html = '<ul class="color-score"><li class="color-score-current">A+</li><li>A</li><li>B</li><li>C</li><li>D</li><li>E</li><li>F</li></ul>';
             } else if (network_transfer_kb <= 531.15) {
-                network_transfer_class = 'A';
-                network_transfer_color = 'green'
+                network_transfer_html = '<ul class="color-score"><li>A+</li><li class="color-score-current">A</li><li>B</li><li>C</li><li>D</li><li>E</li><li>F</li></ul>';
             } else if (network_transfer_kb <= 975.85) {
-                network_transfer_class = 'B';
-                network_transfer_color = 'olive'
+                network_transfer_html = '<ul class="color-score"><li>A+</li><li>A</li><li class="color-score-current">B</li><li>C</li><li>D</li><li>E</li><li>F</li></ul>';
             } else if (network_transfer_kb <= 1410.39) {
-                network_transfer_class = 'C';
-                network_transfer_color = 'teal'
+                network_transfer_html = '<ul class="color-score"><li>A+</li><li>A</li><li>B</li><li class="color-score-current">C</li><li>D</li><li>E</li><li>F</li></ul>';
             } else if (network_transfer_kb <= 1875.01) {
-                network_transfer_class = 'D';
-                network_transfer_color = 'yellow'
+                network_transfer_html = '<ul class="color-score"><li>A+</li><li>A</li><li>B</li><li>C</li><li class="color-score-current">D</li><li>E</li><li>F</li></ul>';
             } else if (network_transfer_kb <= 2419.56) {
-                network_transfer_class = 'E';
-                network_transfer_color = 'orange'
+                network_transfer_html = '<ul class="color-score"><li>A+</li><li>A</li><li>B</li><li>C</li><li>D</li><li class="color-score-current">E</li><li>F</li></ul>';
             } else if (network_transfer_kb > 2419.56) {
-                network_transfer_class = 'F';
-                network_transfer_color = 'red'
+                network_transfer_html = '<ul class="color-score"><li>A+</li><li>A</li><li>B</li><li>C</li><li>D</li><li>E</li><li class="color-score-current">F</li></ul>';
             } else {
-                network_transfer_class = 'N/A';
-                network_transfer_color = 'purple'
+                console.error('Could not determine network transfer for ', runs_data[idx][7]['__GMT_VAR_PAGE__'], '. Value: ', network_transfer_kb);
+                network_transfer_html = 'N/A';
             }
 
-            document.querySelector('#websites').insertAdjacentHTML(
-                'beforeend',
-                `<div class="ui yellow segment"><a class="ui label" href="https://metrics.green-coding.io/stats.html?id=${runs_data[idx][0]}">${truncate(runs_data[idx][7]['__GMT_VAR_PAGE__'])} - (${(new Date(runs_data[idx][4])).toLocaleDateString(navigator.language, { year: 'numeric', month: 'short', day: 'numeric' })}) <i class="external alternate icon"></i></a>
-                    <hr>
-                    <div class="badge-container">
-<a href="http://metrics.green-coding.io/stats.html?id=${runs_data[idx][0]}" target='_blank' rel='noopener'>
-                <div class="ui label" style="
-                        display: inline-block;
-                        display: inline-flex;
-
-                        gap: 16px;
-                    ">
-                        <div>
-                    <div class="ui ${power_color} label" style="margin-left: 13px; margin-bottom: 3px;"> ${power_class} </div>
-                        <div>Rendering</div>
-                     </div>
-                       <div>
-                    <div class="ui ${network_transfer_color} label" style="
-                        margin-left: 25px;
-                        margin-bottom: 3px;
-                    "> ${network_transfer_class}
-                          </div>
-                           <div>Network Data</div>
-                            </div>
-                        </div>
-                </a>
-                    </div>
-                </div>`,
-            );
+            const html_content = `
+                <tr>
+                    <td class="single line">${truncate(runs_data[idx][7]['__GMT_VAR_PAGE__'])}</td>
+                    <td>${(new Date(runs_data[idx][4])).toLocaleDateString(navigator.language, { year: 'numeric', month: 'short', day: 'numeric' })}</td>
+                    <td class="single line">
+                        ${rendering_power_html}
+                    </td>
+                    <td class="single line">
+                        ${network_transfer_html}
+                    </td>
+                    <td>
+                        <a href="https://metrics.green-coding.io/timeline.html?uri=https%3A%2F%2Fgithub.com%2Fgreen-coding-solutions%2Fgreen-metrics-tool&amp;branch=main&amp;machine_id=6&amp;filename=templates%2Fwebsite%2Fusage_scenario_cached.yml&amp;metrics=key" class="ui teal horizontal label  no-wrap"><i class="ui icon clock"></i>History &nbsp;</a>
+                    </td>
+                    <td>
+                        <a class="ui button" href="https://metrics.green-coding.io/stats.html?id=${runs_data[idx][0]}" target='_blank' rel='noopener'>Details</a>
+                    </td>
+                </tr>`;
+            document.querySelector('#websites').insertAdjacentHTML('beforeend', html_content);
         });
 
         // Prevent form submission (for demonstration purposes)

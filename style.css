@@ -1,0 +1,98 @@
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #363946;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        background-color: #fff;
+    }
+}
+
+body > .grid {
+    height: 100%;
+}
+body {
+    margin-top: min(100px, 5vh);
+}
+.column {
+    max-width: 950px;
+}
+
+#radio-buttons .field label {
+    font-weight: normal;
+}
+
+div[class*="left aligned"] {
+    text-align: left;
+}
+
+.badge-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.badge-container a {
+    display: flex;
+}
+
+.badge-container img {
+    height: auto;
+    max-width: 350px;
+}
+
+.color-score {
+    padding-inline-start: 0px;
+    margin-block-end: 0px;
+    margin-block-start: 0px;
+    padding-inline-end: 0px;
+}
+.color-score li {
+  display:inline-block;
+  padding:.8em .4em;
+  margin:0;
+  color:rgba(255,255,255,.5);
+  font-weight:bold;
+ }
+
+/*A+*/
+.color-score li:nth-child(1) {
+  background:darkgreen;
+  border-radius:.6em 0 0 .6em;
+}
+/*A*/
+.color-score li:nth-child(2) {background:green}
+/*B*/
+.color-score li:nth-child(3) {background:#92BA47}
+/*C*/
+.color-score li:nth-child(4) {background:#F6CD46}
+/*D*/
+.color-score li:nth-child(5) {
+  background:#ff6f1e;
+}
+/*E*/
+.color-score li:nth-child(6) {
+  background:#fe6673;
+}
+/*F*/
+.color-score li:nth-child(7) {
+  background:#ff0f0f;
+  border-radius:0 .6em .6em 0;
+  border-radius:0 .6em .6em 0;
+}
+
+
+ul.color-score li.color-score-current {
+  color:white;
+  border:.1em solid white;
+  border-radius:.8em;
+  padding:1em .5em;
+  margin:0 -.4em;
+  position:relative;
+}
+
