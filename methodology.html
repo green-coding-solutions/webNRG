@@ -37,6 +37,7 @@
                 <p>To make the measurements even more reliable we tightly accuracy control our measurement machines. See more on this below.</p>
                 <h4>Rendering Energy Label</h4>
                 <p>To generate the categories from <b>A+ to F</b> we use the idle power consumption of our measurement machine as capture by the <i>Idle</i> phase in the Green Metrics Tool. We then take the lowest energy consuming page we could find (<a href="https://motherfuckingwebsite.com" target='_blank' rel='noopener'>motherfuckingwebsite.com</a>) as A+ and then <b>linearly increment steps by 25% </b>increase in rendering power. Everything above <i>2.5*Idle Power</i> is considered F.</p>
+                <p>The decision for <i>25%</i> was made because on our measurement system we see a 95p STDDEV of 0.2 W. 25% of the idle power consumption equals 2.5x this STDDEV which is a typical way of determining a range for a statistical relevant difference (outlier) between categories / observations.</p>
                 <hr>
                 <h3>Network Traffic and Carbon</h3>
                 <p>Network traffic gets captured from a cgroup in which the browser is executed. This isolates traffic from the webpage from network traffic that occures through noise on the host system.</p>
