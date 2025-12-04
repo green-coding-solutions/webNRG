@@ -81,6 +81,7 @@
             if (last_run != null) {
                 alert('We already have a run for this URL in the last 30 days - You will now be redirected to the details page');
                 window.location = `/details.html?page=${encodeURIComponent(normalized_url)}`;
+                return;
             }
 
             const dataToSend = {
