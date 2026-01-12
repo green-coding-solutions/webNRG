@@ -65,23 +65,39 @@
         });
 
         // Prevent form submission (for demonstration purposes)
-        document.querySelector('#page-form').onsubmit = async function(e) {
+        const form = document.querySelector('#page-form');
+        const form_button = form.querySelector('#form-submit-button');
+        form.onsubmit = async function(e) {
             e.preventDefault();
+
+            form.classList.add('loading');
+            form_button.disabled = true
+
             const formData = new FormData(this);
             let normalized_url;
             try {
                  normalized_url = normalizeUrl(formData.get('page'));
              } catch (error) {
-                alert('URL is invalid. Please enter a valid URL.')
-                return;
+                alert('URL is invalid. Please enter a valid URL.');
+                form.classList.remove('loading'); form_button.disabled = false;
+                return false;
             }
 
             // first we check if we already have a run in the last 30 days for this
-            const last_run = await fetchData(1, normalized_url);
+            let last_run = null;
+            try {
+                last_run = await fetchData(1, normalized_url);
+            } catch (error) {
+                alert('Could not check in DB for already present runs. Please try again later');
+                console.error('Error:', error);
+                form.classList.remove('loading'); form_button.disabled = false;
+                return false;
+            }
             if (last_run != null) {
                 alert('We already have a run for this URL in the last 30 days - You will now be redirected to the details page');
                 window.location = `/details.html?page=${encodeURIComponent(normalized_url)}`;
-                return;
+                form.classList.remove('loading'); form_button.disabled = false;
+                return false;
             }
 
             const dataToSend = {
@@ -104,18 +120,22 @@
                 if (!response.ok) {
                     alert(`Could not send data. HTTP error! status: ${response.status} and text: ${await response.text()} `);
                     console.error('Error:', response);
-                    return
+                    form.classList.remove('loading'); form_button.disabled = false;
+                    return false;
                 }
 
             } catch (error) {
                 console.error('Error:', error);
                 alert('An error occurred. Check console for details.');
-                return
+                form.classList.remove('loading'); form_button.disabled = false;
+                return false;
             }
 
             alert('Thanks, we have received your measurement request and will e-mail you shortly!', 'Success :)');
 
             // reset form
-            document.querySelector('#page-form').reset()
+            form.reset()
+            form.classList.remove('loading'); form_button.disabled = false;
+            return false;
         };
 })()
