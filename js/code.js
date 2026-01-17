@@ -12,6 +12,8 @@
         form_button.disabled = true
 
         const formData = new FormData(this);
+        const email = formData.get('email').trim();
+
         let normalized_url;
         try {
              normalized_url = normalizeUrl(formData.get('page'));
@@ -39,7 +41,7 @@
         }
 
         const dataToSend = {
-            email: formData.get('email'),
+            email: email,
             page: normalized_url,
             mode: 'website',
             schedule_mode: formData.get('schedule_mode'),
@@ -69,7 +71,11 @@
             return false;
         }
 
-        alert('Thanks, we have received your measurement request and will e-mail you shortly!', 'Success :)');
+        if (email === '') {
+            alert('Thanks, we have received your measurement request and will e-mail you shortly!', 'Success :)');
+        } else {
+            alert('Thanks, we have received your measurement request and can find your results on this page shortly!', 'Success :)');
+        }
 
         // reset form
         form.reset()
