@@ -136,10 +136,10 @@
                     ${network_transfer_html}
                 </td>
                 <td>
-                    <a href="https://metrics.green-coding.io/timeline.html?uri=https%3A%2F%2Fgithub.com%2Fgreen-coding-solutions%2Fgreen-metrics-tool&amp;branch=main&amp;machine_id=6&amp;filename=templates%2Fwebsite%2Fusage_scenario_cached.yml&amp;usage_scenario_variables=${encodeURIComponent(usage_scenario_variables_json)}&amp;metrics=key" class="ui teal horizontal label  no-wrap"><i class="ui icon clock"></i>History &nbsp;</a>
+                    <a href="https://metrics.green-coding.io/timeline.html?uri=https%3A%2F%2Fgithub.com%2Fgreen-coding-solutions%2Fgreen-metrics-tool&amp;branch=main&amp;machine_id=6&amp;filename=templates%2Fwebsite%2Fusage_scenario_cached.yml&amp;usage_scenario_variables=${encodeURIComponent(usage_scenario_variables_json)}&amp;metrics=key" class="ui teal horizontal label no-wrap" target="_blank" rel="noopener"><i class="ui icon clock"></i>History &nbsp;</a>
                 </td>
                 <td>
-                    <a class="ui button" href="details.html?page=${page}" target='_blank' rel='noopener'>Details</a>
+                    <a class="ui button" href="details.html?page=${page}" target="_blank" rel="noopener">Details</a>
                 </td>
             </tr>`;
         document.querySelector('#websites').insertAdjacentHTML('beforeend', html_content);
