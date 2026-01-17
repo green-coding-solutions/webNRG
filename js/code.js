@@ -56,7 +56,7 @@
             });
 
             if (!response.ok) {
-                alert(`Could not send data. HTTP error! status: ${response.status} and text: ${await response.text()} `);
+                alert(`Could not send data. HTTP error! status: ${response.status} and text: ${await response.text()} - Is your page maybe HTTP only? Then prepend http://`);
                 console.error('Error:', response);
                 form.classList.remove('loading'); form_button.disabled = false;
                 return false;
