@@ -72,9 +72,9 @@
         }
 
         if (email === '') {
-            alert('Thanks, we have received your measurement request and will e-mail you shortly!', 'Success :)');
-        } else {
             alert('Thanks, we have received your measurement request and can find your results on this page shortly!', 'Success :)');
+        } else {
+            alert('Thanks, we have received your measurement request and will e-mail you shortly!', 'Success :)');
         }
 
         // reset form
