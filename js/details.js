@@ -48,7 +48,7 @@
 
         const [render_energy_html, network_transfer_html] = getRatings(cpu_energy_mWh, network_transfer_kb);
 
-
+        document.title = "webNRG - " + usage_scenario_variables['__GMT_VAR_PAGE__'];
         document.querySelector('#website-name').textContent = usage_scenario_variables['__GMT_VAR_PAGE__'];
         document.querySelector('#last-run-date').textContent = last_run_date;
         document.querySelector('#rendering-energy-label').innerHTML = render_energy_html;
