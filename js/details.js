@@ -21,7 +21,7 @@
 
         const uuid = last_run[0][0];
         const usage_scenario_variables = last_run[0][7];
-        const last_run_date = Date(last_run[0][4]);
+        const last_run_date = new Date(last_run[0][4]);
         let usage_scenario_variables_json = Object.entries(usage_scenario_variables).map(([k, v]) => typeof(v) == 'number' ? `"${k}": ${v}` : `"${k}": ${JSON.stringify(v)}`).join(', ')
         usage_scenario_variables_json = `{${usage_scenario_variables_json}}`
 
