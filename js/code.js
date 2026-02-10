@@ -130,9 +130,11 @@
                 <td class="single line">${truncate(page)}</td>
                 <td>${(new Date(runs_data[idx][4])).toLocaleDateString(navigator.language, { year: 'numeric', month: 'short', day: 'numeric' })}</td>
                 <td class="single line">
+                    <h3 class="ui mobile ad">Rendering</h3>
                     ${rendering_power_html}
                 </td>
                 <td class="single line">
+                    <h3 class="ui mobile ad">Network</h3>
                     ${network_transfer_html}
                 </td>
                 <td>
