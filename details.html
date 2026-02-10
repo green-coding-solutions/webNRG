@@ -34,15 +34,13 @@
                 <p style="margin-left: 0; margin-top: 10px; text-align: left;">Tested on <span id="last-run-date"></span></p>
                 <hr>
                 <div style="display: flex; gap: 20px;">
-                    <div id="rendering-power-label" style="white-space: nowrap;"></div>
+                    <div id="rendering-energy-label" style="white-space: nowrap;"></div>
                     <div>
-                        <h2 style="
-                display: inline-block;
-                margin-bottom: 0px;
-                ">Rendering Power</h2>
+                        <h2 style="display: inline-block; margin-bottom: 0px;">Rendering Energy</h2>
                         <p>The CPU power consumption for rendering was <span id="rendering-power" class="ui label"></span></p>
-                        <p>With a visit time of <span class="ui label measurement-duration"></span> this equates to <span id="rendering-energy" class="ui label"></span></p>
-                        <p>If you have 10,000 people visiting your page per month this would consume <span id="rendering-energy-10k" class="ui label"></span> of energy</p>
+                        <p>With an initial load and then waiting for 5s the total visit time was: <span class="ui label measurement-duration"></span></p>
+                        <p>This equates to an energy of: <span id="rendering-energy" class="ui label"></span></p>
+                        <p>If you have 10,000 people visiting your page per month this would consume <span id="rendering-energy-10k" class="ui label"></span></p>
                     </div>
                 </div>
                 <hr>
@@ -57,7 +55,7 @@
                 <hr>
                 <h3>History and more details</h3>
                 <ul>
-                    <li style="margin-bottom:5px;">See the power consumption over time: <a id="timeline-link" href="" class="ui teal horizontal no-wrap" target="_blank" rel="noopener"><i class="ui icon clock"></i>History &nbsp;</a></li>
+                    <li style="margin-bottom:5px;">See the energy consumption over time: <a id="timeline-link" href="" class="ui teal horizontal no-wrap" target="_blank" rel="noopener"><i class="ui icon clock"></i>History &nbsp;</a></li>
                     <li>See more details of the measurement: <a id="measurement-details-link" href="" class="ui blue horizontal no-wrap"  target="_blank" rel="noopener"><i class="ui icon info"></i>Measurement Details</a></li>
                 </ul>
             </div>

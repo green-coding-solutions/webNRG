@@ -113,13 +113,13 @@
         const page = runs_data[idx][7]['__GMT_VAR_PAGE__'];
         const usage_scenario_variables = runs_data[idx][7];
 
-        const cpu_power = data?.['data']?.['[RUNTIME]']?.['data']?.['cpu_power_rapl_msr_component']?.['data']?.['Package_0']?.['data']?.[uuid]?.['mean'];
-        const cpu_power_W = cpu_power / 1_000;
-        const total_duration = data?.['data']?.['[RUNTIME]']?.['data']?.['phase_time_syscall_system']?.['data']?.['[SYSTEM]']?.['data']?.[uuid]?.['mean'];
-        const network_transfer = data?.['data']?.['[RUNTIME]']?.['data']?.['network_total_cgroup_container']?.['data']?.['gmt-playwright-nodejs']?.['data']?.[uuid]?.['mean'];
-        const network_transfer_kb = network_transfer/1000;
+        const cpu_energy_uJ = data?.['data']?.['Visit page and idle for 5 s']?.['data']?.['cpu_energy_rapl_msr_component']?.['data']?.['Package_0']?.['data']?.[uuid]?.['mean'];
+        const cpu_energy_mWh = cpu_energy_uJ/3600/1000;
 
-        const [rendering_power_html, network_transfer_html] = getRatings(cpu_power_W, network_transfer_kb);
+        const network_transfer_bytes = data?.['data']?.['Visit page and idle for 5 s']?.['data']?.['network_total_cgroup_container']?.['data']?.['gmt-playwright-nodejs']?.['data']?.[uuid]?.['mean'];
+        const network_transfer_kb = network_transfer_bytes/1000;
+
+        const [rendering_energy_html, network_transfer_html] = getRatings(cpu_energy_mWh, network_transfer_kb);
 
 
         let usage_scenario_variables_json = Object.entries(usage_scenario_variables).map(([k, v]) => typeof(v) == 'number' ? `"${k}": ${v}` : `"${k}": ${JSON.stringify(v)}`).join(', ')
@@ -131,7 +131,7 @@
                 <td>${(new Date(runs_data[idx][4])).toLocaleDateString(navigator.language, { year: 'numeric', month: 'short', day: 'numeric' })}</td>
                 <td class="single line">
                     <h3 class="ui mobile ad">Rendering</h3>
-                    ${rendering_power_html}
+                    ${rendering_energy_html}
                 </td>
                 <td class="single line">
                     <h3 class="ui mobile ad">Network</h3>

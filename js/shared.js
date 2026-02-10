@@ -44,28 +44,37 @@ const getURLParams = () => {
     return Object.fromEntries(url_params.entries())
 }
 
-const getRatings = (cpu_power_W, network_transfer_kb) => {
+
+const getRatings = (cpu_energy_mWh, network_transfer_kb) => {
     let rendering_power_html;
     let network_transfer_html;
 
-    const cpu_idle_power = 2.45
+    /*
+    Explanation commented out bc we do not want to recalculate for every call
+    const cpu_idle_power_watts = 2.45
+    const default_waiting_time_seconds = 5
+    const best_rendering_time_seconds = 0.5
+    const rendering_energy_best_mWh = cpu_idle_power_watts * (default_waiting_time_seconds + best_rendering_time_seconds) / 3.6
+    => rendering_energy_best_mWh = 4.6788194
+    */
+    const rendering_energy_best_mWh = 4.6788194
 
-    if (cpu_power_W > cpu_idle_power*2.5) {
+    if (cpu_energy_mWh > rendering_energy_best_mWh*2.5) {
         rendering_power_html = '<ul class="color-score"><li>A+</li><li>A</li><li>B</li><li>C</li><li>D</li><li>E</li><li class="color-score-current">F</li></ul>';
-    } else if (cpu_power_W >= cpu_idle_power*2.25) {
+    } else if (cpu_energy_mWh >= rendering_energy_best_mWh*2.25) {
         rendering_power_html = '<ul class="color-score"><li>A+</li><li>A</li><li>B</li><li>C</li><li>D</li><li class="color-score-current">E</li><li>F</li></ul>';
-    } else if (cpu_power_W >= cpu_idle_power*2) {
+    } else if (cpu_energy_mWh >= rendering_energy_best_mWh*2) {
         rendering_power_html = '<ul class="color-score"><li>A+</li><li>A</li><li>B</li><li>C</li><li class="color-score-current">D</li><li>E</li><li>F</li></ul>';
-    } else if (cpu_power_W >= cpu_idle_power*1.75) {
+    } else if (cpu_energy_mWh >= rendering_energy_best_mWh*1.75) {
         rendering_power_html = '<ul class="color-score"><li>A+</li><li>A</li><li>B</li><li class="color-score-current">C</li><li>D</li><li>E</li><li>F</li></ul>';
-    } else if (cpu_power_W >= cpu_idle_power*1.5) {
+    } else if (cpu_energy_mWh >= rendering_energy_best_mWh*1.5) {
         rendering_power_html = '<ul class="color-score"><li>A+</li><li>A</li><li class="color-score-current">B</li><li>C</li><li>D</li><li>E</li><li>F</li></ul>';
-    } else if (cpu_power_W >= cpu_idle_power*1.25) {
+    } else if (cpu_energy_mWh >= rendering_energy_best_mWh*1.25) {
         rendering_power_html = '<ul class="color-score"><li>A+</li><li class="color-score-current">A</li><li>B</li><li>C</li><li>D</li><li>E</li><li>F</li></ul>';
-    } else if (cpu_power_W > 0 && cpu_power_W < cpu_idle_power*1.25) {
+    } else if (cpu_energy_mWh > 0 && cpu_energy_mWh < rendering_energy_best_mWh*1.25) {
         rendering_power_html = '<ul class="color-score"><li class="color-score-current">A+</li><li>A</li><li>B</li><li>C</li><li>D</li><li>E</li><li>F</li></ul>';
     } else {
-        console.error('Could not determine rendering power for ', runs_data[idx][7]['__GMT_VAR_PAGE__'], '. Value: ', cpu_power_W);
+        console.error('Could not determine rendering power for ', runs_data[idx][7]['__GMT_VAR_PAGE__'], '. Value: ', cpu_energy_mWh);
         rendering_power_html = 'N/A';
     }
 
