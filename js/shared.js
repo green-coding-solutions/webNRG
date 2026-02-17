@@ -6,11 +6,25 @@ function truncate(str, maxLength=48) {
     : str;
 }
 
+/*
+    URL should not include more than one protocol. we check by :/ more than once
+    If no protocol is specified we append https
+*/
 function normalizeUrl(url) {
-    const hasProtocol = /^https?:\/\//i.test(url);
-    const fullUrl = hasProtocol ? url : 'https://' + url;
-    new URL(fullUrl); // will throw if invalid
-    return fullUrl.replace(/\/+$/, ""); // remove trailing slashes
+    let fullURL = url;
+    if (!url.includes('.')) {
+        throw new Error("URL must contain at least one dot to indicate valid TLD.");
+    } else if (url.includes(':/')) {
+        const protocolMatch = url.match(/^(https?):\/\//);
+        if (!protocolMatch || url.split(':/').length > 2) {
+          throw new Error("Invalid URL: ':/' must only appear once at the start as 'http://' or 'https://'");
+        }
+    } else {
+        fullURL = 'https://' + url;
+    }
+
+    new URL(fullURL); // will throw if invalid
+    return fullURL.replace(/\/+$/, ""); // remove trailing slashes
 }
 
 

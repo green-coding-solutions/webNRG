@@ -18,7 +18,7 @@
         try {
              normalized_url = normalizeUrl(formData.get('page'));
          } catch (error) {
-            alert('URL is invalid. Please enter a valid URL.');
+            alert(`URL is invalid. Please enter a valid URL - ${error}`);
             form.classList.remove('loading'); form_button.disabled = false;
             return false;
         }
