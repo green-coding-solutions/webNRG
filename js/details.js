@@ -62,6 +62,7 @@
     document.querySelector('#network-carbon-10k-year').textContent = `${(network_carbon_10k_kg).toFixed(2)} kg`;
 
     document.querySelector('#measurement-details-link').href = `https://metrics.green-coding.io/stats.html?id=${uuid}`;
+    document.querySelector('#measurement-details-link-scroll').href = `https://metrics.green-coding.io/stats.html?id=${uuid}#RUNTIME__Scroll%20down%20and%20wait%20for%205%20s`;
     document.querySelector('#timeline-link').href = `https://metrics.green-coding.io/timeline.html?uri=https%3A%2F%2Fgithub.com%2Fgreen-coding-solutions%2Fgreen-metrics-tool&branch=main&machine_id=6&filename=templates%2Fwebsite%2Fusage_scenario_cached.yml&usage_scenario_variables=${encodeURIComponent(usage_scenario_variables_json)}&metrics=key`;
 
 })()
