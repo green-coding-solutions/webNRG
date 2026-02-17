@@ -36,11 +36,21 @@
     const cpu_power_mW = data?.['data']?.['Visit page and idle for 5 s']?.['data']?.['cpu_power_rapl_msr_component']?.['data']?.['Package_0']?.['data']?.[uuid]?.['mean'];
     const cpu_power_W = cpu_power_mW / 1_000;
 
+    const cpu_power_scrolling_mW = data?.['data']?.['Scroll down and wait for 5 s']?.['data']?.['cpu_power_rapl_msr_component']?.['data']?.['Package_0']?.['data']?.[uuid]?.['mean'];
+    const cpu_power_scrolling_W = cpu_power_scrolling_mW / 1_000;
+
     const total_duration_us = data?.['data']?.['Visit page and idle for 5 s']?.['data']?.['phase_time_syscall_system']?.['data']?.['[SYSTEM]']?.['data']?.[uuid]?.['mean'];
     const total_duration_s = total_duration_us/1e6;
 
+    const total_duration_scrolling_us = data?.['data']?.['Scroll down and wait for 5 s']?.['data']?.['phase_time_syscall_system']?.['data']?.['[SYSTEM]']?.['data']?.[uuid]?.['mean'];
+    const total_duration_scrolling_s = total_duration_scrolling_us/1e6;
+
     const network_transfer_bytes = data?.['data']?.['Visit page and idle for 5 s']?.['data']?.['network_total_cgroup_container']?.['data']?.['gmt-playwright-nodejs']?.['data']?.[uuid]?.['mean'];
     const network_transfer_kb = network_transfer_bytes/1000;
+
+    const network_transfer_scrolling_bytes = data?.['data']?.['Scroll down and wait for 5 s']?.['data']?.['network_total_cgroup_container']?.['data']?.['gmt-playwright-nodejs']?.['data']?.[uuid]?.['mean'];
+    const network_transfer_scrolling_kb = network_transfer_scrolling_bytes/1000;
+
 
     const network_carbon_ug = data?.['data']?.['Visit page and idle for 5 s']?.['data']?.['network_carbon_formula_global']?.['data']?.['[FORMULA]']?.['data']?.[uuid]?.['mean'];
     const network_carbon_10k_kg = 10*12*network_carbon_ug/1e6
@@ -54,11 +64,16 @@
     document.querySelector('#network-transfer-label').innerHTML = network_transfer_html;
 
     document.querySelector('#rendering-power').textContent = `${cpu_power_W.toFixed(2)} W`;
+    document.querySelector('#rendering-power-scrolling').textContent = `${cpu_power_scrolling_W.toFixed(2)} W`;
+
     document.querySelector('#rendering-energy').textContent = `${(cpu_energy_mWh).toFixed(2)}  mWh`;
     document.querySelector('#rendering-energy-10k').textContent = `${(cpu_energy_10k_kWh).toFixed(2)}  kWh`;
 
     document.querySelectorAll('.measurement-duration').forEach(el => el.textContent = `${(total_duration_s).toFixed(2)} s`); // in s
+    document.querySelector('#measurement-duration-scrolling').textContent = `${(total_duration_scrolling_s).toFixed(2)} s`; // in s
+
     document.querySelector('#network-transfer').textContent = `${network_transfer_kb.toFixed(2)} kB`;
+    document.querySelector('#network-transfer-scrolling').textContent = `${network_transfer_scrolling_kb.toFixed(2)} kB`;
     document.querySelector('#network-carbon-10k-year').textContent = `${(network_carbon_10k_kg).toFixed(2)} kg`;
 
     document.querySelector('#measurement-details-link').href = `https://metrics.green-coding.io/stats.html?id=${uuid}`;
