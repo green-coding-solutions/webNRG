@@ -26,7 +26,11 @@
         // first we check if we already have a run in the last 30 days for this
         let last_run = null;
         try {
-            last_run = await fetchData(1, normalized_url);
+            const modded_date = new Date();
+            modded_date.setDate(modded_date.getDate() - 30);
+            const thirty_days_ago = modded_date.toISOString().split('T')[0];
+
+            last_run = await fetchData(1, normalized_url, thirty_days_ago);
         } catch (error) {
             alert('Could not check in DB for already present runs. Please try again later');
             console.error('Error:', error);
