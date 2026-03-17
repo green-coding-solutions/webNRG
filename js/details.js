@@ -30,8 +30,8 @@
     const data = phase_stats.data;
 
     const cpu_energy_uJ = data?.['data']?.['Visit page and idle for 5 s']?.['data']?.['cpu_energy_rapl_msr_component']?.['data']?.['Package_0']?.['data']?.[uuid]?.['mean'];
-    const cpu_energy_mWh = cpu_energy_uJ/3600/1000;
-    const cpu_energy_10k_kWh = 10*cpu_energy_mWh/1000;
+    const cpu_energy_mWh = cpu_energy_uJ/3_600_000;
+    const cpu_energy_10k_kWh = cpu_energy_mWh*0.12; // * 12 * 10_000 / 1_000_000
 
     const cpu_power_mW = data?.['data']?.['Visit page and idle for 5 s']?.['data']?.['cpu_power_rapl_msr_component']?.['data']?.['Package_0']?.['data']?.[uuid]?.['mean'];
     const cpu_power_W = cpu_power_mW / 1_000;
@@ -53,7 +53,7 @@
 
 
     const network_carbon_ug = data?.['data']?.['Visit page and idle for 5 s']?.['data']?.['network_carbon_formula_global']?.['data']?.['[FORMULA]']?.['data']?.[uuid]?.['mean'];
-    const network_carbon_10k_kg = 10*12*network_carbon_ug/1e6
+    const network_carbon_10k_kg = network_carbon_ug*0.00012; // * 12 * 10_000 / 1_000_000_000
 
     const [render_energy_html, network_transfer_html] = getRatings(cpu_energy_mWh, network_transfer_kb);
 
