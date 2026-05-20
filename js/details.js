@@ -55,6 +55,16 @@
     const network_carbon_ug = data?.['data']?.['Visit page and idle for 5 s']?.['data']?.['network_carbon_formula_global']?.['data']?.['[FORMULA]']?.['data']?.[uuid]?.['mean'];
     const network_carbon_10k_kg = network_carbon_ug*0.00012; // * 12 * 10_000 / 1_000_000_000
 
+    const INTENSITY_LEVEL_MAP = {
+        1: { label: 'Low',       color: 'green'  },
+        2: { label: 'Medium',    color: 'yellow' },
+        3: { label: 'High',      color: 'orange' },
+        4: { label: 'Very High', color: 'red'    },
+    };
+    const carbon_intensity_level = data?.['data']?.['Visit page and idle for 5 s']
+        ?.['data']?.['carbon_intensity_level_electricitymaps_machine']
+        ?.['data']?.['electricity_maps']?.['data']?.[uuid]?.['mean'];
+
     const [render_energy_html, network_transfer_html] = getRatings(cpu_energy_mWh, network_transfer_kb);
 
     document.title = "webNRG - " + usage_scenario_variables['__GMT_VAR_PAGE__'];
@@ -75,6 +85,15 @@
     document.querySelector('#network-transfer').textContent = `${network_transfer_kb.toFixed(2)} kB`;
     document.querySelector('#network-transfer-scrolling').textContent = `${network_transfer_scrolling_kb.toFixed(2)} kB`;
     document.querySelector('#network-carbon-10k-year').textContent = `${(network_carbon_10k_kg).toFixed(2)} kg`;
+
+    const intensity_el = document.querySelector('#carbon-intensity-level');
+    if (carbon_intensity_level != null && intensity_el) {
+        const level = INTENSITY_LEVEL_MAP[Math.round(carbon_intensity_level)];
+        if (level) {
+            intensity_el.textContent = level.label;
+            intensity_el.classList.add(level.color);
+        }
+    }
 
     document.querySelector('#measurement-details-link').href = `https://metrics.green-coding.io/stats.html?id=${uuid}`;
     document.querySelector('#measurement-details-link-scroll').href = `https://metrics.green-coding.io/stats.html?id=${uuid}#RUNTIME__Scroll%20down%20and%20wait%20for%205%20s`;
