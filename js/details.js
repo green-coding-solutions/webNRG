@@ -57,9 +57,8 @@
 
     const INTENSITY_LEVEL_MAP = {
         1: { label: 'Low',       color: 'green'  },
-        2: { label: 'Medium',    color: 'yellow' },
-        3: { label: 'High',      color: 'orange' },
-        4: { label: 'Very High', color: 'red'    },
+        2: { label: 'Moderate',    color: 'yellow' },
+        3: { label: 'High',      color: 'red' },
     };
     const carbon_intensity_level = data?.['data']?.['Visit page and idle for 5 s']
         ?.['data']?.['carbon_intensity_level_electricitymaps_machine']
