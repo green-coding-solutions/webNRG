@@ -33,20 +33,27 @@
                 <h1 id="website-name" class="ui massive teal ribbon label"></h1>
                 <p style="margin-left: 0; margin-top: 10px; text-align: left;">Tested on <span id="last-run-date"></span></p>
                 <hr>
-                <div id="rendering-energy-label" style="white-space: nowrap;"></div>
-                <div>
+                <div style="display: flex; align-items: center; gap: 10px;">
                     <h2 style="display: inline-block; margin-bottom: 0px;">Rendering Energy</h2>
-                    <p>The CPU power consumption for rendering was <span id="rendering-power" class="ui label"></span></p>
-                    <p>With an initial load and then waiting for 5s the total visit time was: <span class="ui label measurement-duration"></span></p>
-                    <p>This equates to an energy of: <span id="rendering-energy" class="ui label"></span></p>
-                    <p>Over a year with 10,000 monthly page views this would consume <span id="rendering-energy-10k" class="ui label"></span></p>
+                    <div id="rendering-energy-label" style="white-space: nowrap;"></div>
                 </div>
+                <br>
+                <p>The CPU power consumption for rendering was <span id="rendering-power" class="ui label"></span></p>
+                <p>With an initial load and then waiting for 5s the total visit time was: <span class="ui label measurement-duration"></span></p>
+                <p>This equates to an energy of: <span id="rendering-energy" class="ui label"></span></p>
+                <p>Over a year with 10,000 monthly page views this would consume <span id="rendering-energy-10k" class="ui label"></span> and emit <span id="cpu-carbon-10k" class="ui label"></span></p>
                 <hr>
-                <div id="network-transfer-label" style="white-space: nowrap;"></div>
-                <h2 style="display: inline-block; margin-bottom: 0px;">Network Data</h2>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <h2 style="display: inline-block; margin-bottom: 0px;">Network Data</h2>
+                    <div id="network-transfer-label" style="white-space: nowrap;"></div>
+                </div>
+                <br>
                 <p>The network data transfer the website was <span id="network-transfer" class="ui label"></span> for loading and staying on the page for <span class="ui label measurement-duration"></span></p>
                 <p>Over a year with 10,000 monthly page views this website would produce about <span id="network-carbon-10k-year" class="ui label"></p>
+                <hr>
+                <h2>Grid Intensity</h2>
                 <p>The carbon intensity level of the electricity grid at measurement time was: <span id="carbon-intensity-level" class="ui label"></span> <small>(source: <a href="https://www.electricitymaps.com" target="_blank" rel="noopener">Electricity Maps</a>)</small></p>
+                <p>In value in absolute numbers was: <span id="carbon-intensity-value" class="ui label"></span></p>
                 <hr>
                 <h3>What about scrolling?</h3>
                 <p>A page can download way more resources when scrolling down. Also some energy intensive rendering elements can be below the fold.</p>

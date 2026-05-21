@@ -85,6 +85,22 @@
     document.querySelector('#network-transfer-scrolling').textContent = `${network_transfer_scrolling_kb.toFixed(2)} kB`;
     document.querySelector('#network-carbon-10k-year').textContent = `${(network_carbon_10k_kg).toFixed(2)} kg`;
 
+    const carbon_intensity_data = data?.['data']?.['Visit page and idle for 5 s']
+        ?.['data']?.['carbon_intensity_elephant_machine']?.['data'];
+    const carbon_intensity_detail = carbon_intensity_data ? Object.keys(carbon_intensity_data)[0] : null;
+    const carbon_intensity_gco2_kwh = carbon_intensity_detail
+        ? carbon_intensity_data?.[carbon_intensity_detail]?.['data']?.[uuid]?.['mean']
+        : null;
+    if (carbon_intensity_gco2_kwh != null) {
+        document.querySelector('#carbon-intensity-value').textContent = `${Math.round(carbon_intensity_gco2_kwh)} gCO₂e/kWh`;
+    }
+
+    const cpu_carbon_10k_g = carbon_intensity_gco2_kwh != null ? (cpu_energy_10k_kWh) * carbon_intensity_gco2_kwh : null;
+
+    if (cpu_carbon_10k_g != null) {
+        document.querySelector('#cpu-carbon-10k').textContent = `${cpu_carbon_10k_g.toFixed(2)} gCO₂e`;
+    }
+
     const intensity_el = document.querySelector('#carbon-intensity-level');
     if (carbon_intensity_level != null && intensity_el) {
         const level = INTENSITY_LEVEL_MAP[Math.round(carbon_intensity_level)];
