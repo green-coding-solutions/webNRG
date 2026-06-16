@@ -126,8 +126,9 @@
         const [rendering_energy_html, network_transfer_html] = getRatings(cpu_energy_mWh, network_transfer_kb);
 
 
-        let usage_scenario_variables_json = Object.entries(usage_scenario_variables).map(([k, v]) => typeof(v) == 'number' ? `"${k}": ${v}` : `"${k}": ${JSON.stringify(v)}`).join(', ')
-        usage_scenario_variables_json = `{${usage_scenario_variables_json}}`
+        const usage_scenario_variables_params = Object.entries(usage_scenario_variables)
+            .map(([k, v]) => `usage_scenario_variables[${k}]=${encodeURIComponent(v)}`)
+            .join('&amp;');
 
         const html_content = `
             <tr>
@@ -142,7 +143,7 @@
                     ${network_transfer_html}
                 </td>
                 <td>
-                    <a href="https://metrics.green-coding.io/timeline.html?uri=https%3A%2F%2Fgithub.com%2Fgreen-coding-solutions%2Fgreen-metrics-tool&amp;branch=main&amp;machine_id=6&amp;filename=templates%2Fwebsite%2Fusage_scenario_cached.yml&amp;usage_scenario_variables=${encodeURIComponent(usage_scenario_variables_json)}&amp;phase=Visit%20page%20and%20idle%20for%205%20s&ampmetrics=key" class="ui teal horizontal label no-wrap" target="_blank" rel="noopener"><i class="ui icon clock"></i>History &nbsp;</a>
+                    <a href="https://metrics.green-coding.io/timeline.html?uri=https%3A%2F%2Fgithub.com%2Fgreen-coding-solutions%2Fgreen-metrics-tool&amp;branch=main&amp;machine_id=6&amp;filename=templates%2Fwebsite%2Fusage_scenario_cached.yml&amp;${usage_scenario_variables_params}&amp;phase=Visit%20page%20and%20idle%20for%205%20s&amp;metrics=key" class="ui teal horizontal label no-wrap" target="_blank" rel="noopener"><i class="ui icon clock"></i>History &nbsp;</a>
                 </td>
                 <td>
                     <a class="ui button" href="details.html?page=${page}" target="_blank" rel="noopener">Details</a>

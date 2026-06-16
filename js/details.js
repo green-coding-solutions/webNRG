@@ -21,8 +21,9 @@
     const uuid = last_run[0][0];
     const usage_scenario_variables = last_run[0][7];
     const last_run_date = new Date(last_run[0][4]);
-    let usage_scenario_variables_json = Object.entries(usage_scenario_variables).map(([k, v]) => typeof(v) == 'number' ? `"${k}": ${v}` : `"${k}": ${JSON.stringify(v)}`).join(', ')
-    usage_scenario_variables_json = `{${usage_scenario_variables_json}}`
+    const usage_scenario_variables_params = Object.entries(usage_scenario_variables)
+        .map(([k, v]) => `usage_scenario_variables[${k}]=${encodeURIComponent(v)}`)
+        .join('&');
 
 
     const phase_stats = await fetch(`https://api.green-coding.io/v1/phase_stats/single/${uuid}`).then(response => response.json())
@@ -112,6 +113,6 @@
 
     document.querySelector('#measurement-details-link').href = `https://metrics.green-coding.io/stats.html?id=${uuid}`;
     document.querySelector('#measurement-details-link-scroll').href = `https://metrics.green-coding.io/stats.html?id=${uuid}#RUNTIME__Scroll%20down%20and%20wait%20for%205%20s`;
-    document.querySelector('#timeline-link').href = `https://metrics.green-coding.io/timeline.html?uri=https%3A%2F%2Fgithub.com%2Fgreen-coding-solutions%2Fgreen-metrics-tool&branch=main&machine_id=6&filename=templates%2Fwebsite%2Fusage_scenario_cached.yml&usage_scenario_variables=${encodeURIComponent(usage_scenario_variables_json)}&metrics=key`;
+    document.querySelector('#timeline-link').href = `https://metrics.green-coding.io/timeline.html?uri=https%3A%2F%2Fgithub.com%2Fgreen-coding-solutions%2Fgreen-metrics-tool&branch=main&machine_id=6&filename=templates%2Fwebsite%2Fusage_scenario_cached.yml&${usage_scenario_variables_params}&metrics=key`;
 
 })()
