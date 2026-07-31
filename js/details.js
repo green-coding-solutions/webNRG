@@ -62,7 +62,7 @@
         3: { label: 'High',      color: 'red' },
     };
     const carbon_intensity_level = data?.['data']?.['Visit page and idle for 5 s']
-        ?.['data']?.['carbon_intensity_level_electricitymaps_machine']
+        ?.['data']?.['carbon_intensitylevel_electricitymaps_machine'] // In DB this is the naming (merged) as underscores sepeate scopes / domains
         ?.['data']?.['electricity_maps']?.['data']?.[uuid]?.['mean'];
 
     const [render_energy_html, network_transfer_html] = getRatings(cpu_energy_mWh, network_transfer_kb);
