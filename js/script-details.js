@@ -1,6 +1,6 @@
 "use strict";
 
-const SCRIPT_PHASE = 'Run Playwright path';
+const SCRIPT_PHASE = 'Run User Journey';
 const SCRIPT_FILENAME = 'templates/website/usage_scenario_playwright_js_cached.yml';
 const POLL_INTERVAL_MS = 30_000;
 const POLL_MAX_MS = 90 * 60 * 1000; // runs that take longer than this will not have failed, we just stop waiting
