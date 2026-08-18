@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <!-- Site Properties -->
+    <title>webNRG - Measure energy and CO2 cost of your Playwright path</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="favicon-16x16.png" sizes="16x16">
+    <link rel="icon" href="favicon-32x32.png" sizes="32x32">
+    <link rel="icon" href="favicon-48x48.png" sizes="48x48">
+    <meta name="description" content="Measure the actual energy cost and CO2 emissions that the browser produces when walking through your website with Playwright">
+    <link rel="stylesheet" type="text/css" class="ui" href="dist/css/semantic_reduced.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/shared.js" defer></script>
+    <script type="text/javascript" src="js/script-details.js" defer></script>
+</head>
+
+<body>
+    <div class="ui center aligned grid">
+        <div class="column">
+            <a href="/" style="display: block; margin-bottom: 20px;">
+                <h2 class="ui image header">
+                    <img src="img/gc.png" class="image">
+                    <div class="content" style="color: #3d936f; font-size: 70px; line-height: 70px; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;">webNRG⚡️</div>
+                    <div id="tagline">... pronounced web energy ;)</div>
+                </h2>
+            </a>
+
+            <div id="script-waiting" class="ui stacked segment">
+                <div class="ui active centered inline loader"></div>
+                <h3>Measuring your Playwright path ...</h3>
+                <p>This usually takes between 5 and 30 minutes. You can bookmark this page and come back later &mdash; it keeps checking on its own.</p>
+                <p><small>Waiting for <span id="waiting-duration">0</span> minutes</small></p>
+            </div>
+
+            <div id="script-error" class="ui stacked segment left aligned" style="display: none;">
+                <h2>The measurement did not succeed</h2>
+                <p id="script-error-message"></p>
+                <p>See what went wrong in the <a id="error-details-link" href="" class="ui blue horizontal no-wrap" target="_blank" rel="noopener"><i class="ui icon info"></i>Measurement Details</a></p>
+            </div>
+
+            <div id="script-results" class="ui stacked segment left aligned" style="display: none;">
+                <h1 id="website-name" class="ui massive teal ribbon label"></h1>
+                <p style="margin-left: 0; margin-top: 10px; text-align: left;">Playwright path measured on <span id="last-run-date"></span></p>
+                <hr>
+                <h2>Your Playwright path</h2>
+                <p>These numbers cover only your path. They do <b>not</b> include opening the page, which we do beforehand and measure separately. Because every path is different there is no rating here &mdash; use the numbers to compare your own paths against each other.</p>
+                <table class="ui celled padded table">
+                    <tbody>
+                        <tr>
+                            <td>CPU power while running your path</td>
+                            <td id="rendering-power"></td>
+                        </tr>
+                        <tr>
+                            <td>Time your path took</td>
+                            <td id="measurement-duration"></td>
+                        </tr>
+                        <tr>
+                            <td>Energy your path consumed</td>
+                            <td id="rendering-energy"></td>
+                        </tr>
+                        <tr>
+                            <td>Network data transferred</td>
+                            <td id="network-transfer"></td>
+                        </tr>
+                        <tr>
+                            <td>Carbon emitted by that network traffic</td>
+                            <td id="network-carbon"></td>
+                        </tr>
+                        <tr>
+                            <td>Grid intensity at measurement time <small>(source: <a href="https://www.electricitymaps.com" target="_blank" rel="noopener">Electricity Maps</a>)</small></td>
+                            <td><span id="carbon-intensity-value"></span> <span id="carbon-intensity-level" class="ui label"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <h3>The path we ran</h3>
+                <pre class="script-source" id="script-source"></pre>
+                <hr>
+                <h3>History and more details</h3>
+                <ul>
+                    <li style="margin-bottom:5px;">See the energy consumption over time: <a id="timeline-link" href="" class="ui teal horizontal no-wrap" target="_blank" rel="noopener"><i class="ui icon clock"></i>History &nbsp;</a></li>
+                    <li>See more details of the measurement: <a id="measurement-details-link" href="" class="ui blue horizontal no-wrap" target="_blank" rel="noopener"><i class="ui icon info"></i>Measurement Details</a></li>
+                </ul>
+            </div>
+            <hr>
+            <div class="ui left aligned info message">
+                <div class="content">
+                    <p><b>How does it work?</b> 👉 <a href="/methodology.html" style="text-decoration: underline;">Read about the methodology here</a></p>
+                </div>
+            </div>
+
+            <script data-domain="website-tester.green-coding.io" data-api="https://worker-spring-sunset-f89b.arne5926.workers.dev/jovvvvvse" src="https://worker-spring-sunset-f89b.arne5926.workers.dev/worker/script.outbound-links.js" defer></script>
+        </div>
+    </div>
+</body>
+</html>

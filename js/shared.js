@@ -55,6 +55,41 @@ async function fetchData(limit=10, usage_scenario_variables='', start_date=null)
 }
 
 
+/*
+    Fetches a single run by the job id that the gateway returned on submit.
+    Returns null while the job is still queued or the measurement has not finished yet.
+*/
+async function fetchRunByJobId(job_id) {
+    const response = await fetch(`https://api.green-coding.io/v2/runs?job_id=${encodeURIComponent(job_id)}&limit=1`);
+
+    if (!response.ok) {
+        console.error('Error fetching run:', response);
+        throw new Error(`API returned ${response.status}`);
+    }
+    if (response.status == 204) return null; // job has not produced a run yet
+
+    const run = (await response.json())?.data?.[0];
+    if (run == null) return null;
+
+    const end_measurement = run[10];
+    const failed = run[11];
+
+    if (failed !== true && end_measurement == null) return null; // run has started, but is not done yet
+
+    return run;
+}
+
+// atob() alone only handles latin1, so we have to decode the UTF-8 bytes ourselves
+function decodeBase64(base64) {
+    const bytes = Uint8Array.from(atob(base64), char => char.charCodeAt(0));
+    return new TextDecoder().decode(bytes);
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
 const getURLParams = () => {
     const url_params = new URLSearchParams(window.location.search);
     if (!url_params.size) return {};

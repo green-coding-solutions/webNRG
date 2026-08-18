@@ -54,6 +54,65 @@ div[class*="left aligned"] {
     max-width: 350px;
 }
 
+#script-toggle > summary {
+    cursor: pointer;
+    text-align: left;
+    padding: 8px 0;
+    font-weight: bold;
+}
+
+#script-toggle .script-optional {
+    font-weight: normal;
+    color: #888;
+}
+
+#script-container {
+    text-align: left;
+}
+
+#script-container .script-note {
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+#script-container .script-note code {
+    background: rgba(0, 0, 0, .06);
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+
+/* semantic sets width:100% on .ui.form select and .ui.form textarea, which stretches both over the full column */
+#script-language {
+    width: auto;
+    margin-bottom: 8px;
+}
+
+#script-input {
+    box-sizing: border-box; /* the reset does not reach in here, so padding would widen the field */
+    max-width: 680px; /* keeps the code area at a readable line length */
+}
+
+#script-input,
+.script-source {
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    tab-size: 2;
+}
+
+.script-source {
+    background: rgba(0, 0, 0, .06);
+    padding: 12px;
+    border-radius: 4px;
+    overflow-x: auto;
+    white-space: pre;
+}
+
+#script-waiting {
+    text-align: center;
+    padding: 40px 0;
+}
+
 .color-score {
     padding-inline-start: 0px;
     margin-block-end: 0px;

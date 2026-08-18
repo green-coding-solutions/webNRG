@@ -13,6 +13,7 @@
 
         const formData = new FormData(this);
         const email = formData.get('email').trim();
+        const script = formData.get('script').trim();
 
         let normalized_url;
         try {
@@ -23,35 +24,44 @@
             return false;
         }
 
-        // first we check if we already have a run in the last 30 days for this
-        let last_run = null;
-        try {
-            const modded_date = new Date();
-            modded_date.setDate(modded_date.getDate() - 30);
-            const thirty_days_ago = modded_date.toISOString().split('T')[0];
+        // Runs with a custom Playwright path are not deduplicated, as the same URL can be walked in many ways
+        if (script === '') {
+            // first we check if we already have a run in the last 30 days for this
+            let last_run = null;
+            try {
+                const modded_date = new Date();
+                modded_date.setDate(modded_date.getDate() - 30);
+                const thirty_days_ago = modded_date.toISOString().split('T')[0];
 
-            last_run = await fetchData(1, normalized_url, thirty_days_ago);
-        } catch (error) {
-            alert('Could not check in DB for already present runs. Please try again later');
-            console.error('Error:', error);
-            form.classList.remove('loading'); form_button.disabled = false;
-            return false;
-        }
-        if (last_run != null) {
-            alert('We already have a run for this URL in the last 30 days - You will now be redirected to the details page');
-            window.location = `/details.html?page=${encodeURIComponent(normalized_url)}`;
-            form.classList.remove('loading'); form_button.disabled = false;
-            return false;
+                last_run = await fetchData(1, normalized_url, thirty_days_ago);
+            } catch (error) {
+                alert('Could not check in DB for already present runs. Please try again later');
+                console.error('Error:', error);
+                form.classList.remove('loading'); form_button.disabled = false;
+                return false;
+            }
+            if (last_run != null) {
+                alert('We already have a run for this URL in the last 30 days - You will now be redirected to the details page');
+                window.location = `/details.html?page=${encodeURIComponent(normalized_url)}`;
+                form.classList.remove('loading'); form_button.disabled = false;
+                return false;
+            }
         }
 
         const dataToSend = {
             email: email,
             page: normalized_url,
-            mode: 'website',
+            mode: script === '' ? 'website' : 'website-script',
             schedule_mode: formData.get('schedule_mode'),
         };
 
+        if (script !== '') {
+            dataToSend.script = script;
+            dataToSend.language = formData.get('language');
+        }
 
+
+        let job_id = null;
         try {
             const response = await fetch('https://gateway.green-coding.io/save', {
                 method: 'POST',
@@ -68,10 +78,18 @@
                 return false;
             }
 
+            job_id = (await response.json())?.data?.job_id;
+
         } catch (error) {
             console.error('Error:', error);
             alert('An error occurred. Check console for details.');
             form.classList.remove('loading'); form_button.disabled = false;
+            return false;
+        }
+
+        // Custom Playwright paths are not listed under the recent runs, so the job id is the only handle the user has
+        if (script !== '' && job_id != null) {
+            window.location = `/script-details.html?job_id=${encodeURIComponent(job_id)}`;
             return false;
         }
 

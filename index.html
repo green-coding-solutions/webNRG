@@ -58,6 +58,25 @@
             </div>
 -->
                     <div class="field">
+                        <details id="script-toggle">
+                            <summary>Your Playwright path <span class="script-optional">(optional)</span></summary>
+                            <div id="script-container">
+                                <p class="script-note">
+                                    Your path runs <b>after we have opened your page</b>, so <code>browser</code>, <code>context</code> and <code>page</code> are already loaded and ready to use.
+                                    Only the Playwright commands themselves are needed &mdash; anything more complex like <code>import</code> or <code>require</code> will <b>not</b> work.
+                                </p>
+                                <select name="language" id="script-language" class="ui dropdown">
+                                    <option value="js" selected>JavaScript</option>
+                                    <option value="python" disabled>Python (coming soon)</option>
+                                </select>
+                                <textarea name="script" id="script-input" rows="8" spellcheck="false" autocapitalize="off" autocorrect="off" placeholder="await page.click('#accept-cookies');
+await page.fill('#search', 'green coding');
+await page.press('#search', 'Enter');
+await page.waitForLoadState('networkidle');"></textarea>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="field">
                         <div class="ui left icon input">
                             <i class="envelope icon"></i>
                             <input type="email" name="email" placeholder="Your e-mail (optional. we ping you when measurement is done)">
