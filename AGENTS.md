@@ -3,6 +3,10 @@
 ## Project
 **webNRG** (pronounced "web energy") is a static frontend that lets users submit a website URL (plus an optional e-mail and a one-off/weekly schedule). The URL is then measured on the Green Metrics Tool (GMT) cluster. The pages show rendering energy, network transfer and carbon for that URL.
 
+There are two flows:
+1. **Website test** (default): load the page and idle, then scroll. The result gets an A+–F rating and is listed in the recent-runs table.
+2. **User Journey** (optional): the user supplies Playwright JS commands, which run after the page has been opened. These results get no rating, are not listed in the recent-runs table, and are only reachable via `script-details.html?job_id=<id>`. ("User Journey" is the GMT name; the UI calls it "Playwright path".)
+
 - Live: https://website-tester.green-coding.io/
 - Deployed to GitHub Pages via `.github/workflows/static.yml` on every push to `main`. The workflow uploads the whole repo root and has **no build step**.
 
@@ -14,24 +18,27 @@
 ## Key files
 | Path | Purpose |
 |------|---------|
-| `index.html` + `js/code.js` | Submit form and the table of recently tested websites |
-| `details.html` + `js/details.js` | Detail page for one URL: `details.html?page=<url>` |
+| `index.html` + `js/code.js` | Submit form (incl. the collapsible `#script-toggle` User Journey textarea) and the table of recently tested websites |
+| `details.html` + `js/details.js` | Detail page for one URL (website test): `details.html?page=<url>` |
+| `script-details.html` + `js/script-details.js` | User Journey result page: `script-details.html?job_id=<id>`. Polls every 30 s for up to 90 min until the run is done, then shows results, an error or the submitted script |
 | `methodology.html` | Static explanation of the measurement and the A+–F labels |
-| `js/shared.js` | Shared helpers: `normalizeUrl`, `fetchData`, `getURLParams`, `getRatings`, `truncate` |
+| `js/shared.js` | Shared helpers: `normalizeUrl`, `fetchData`, `fetchRunByJobId`, `decodeBase64` (UTF-8 safe), `sleep`, `showClusterStatus`, `getURLParams`, `getRatings`, `truncate` |
 | `css/style.css` | Custom styles |
 
 ## Measurement pipeline / GMT integration
-- **Submit:** `POST https://gateway.green-coding.io/save` with `{email, page, mode: 'website', schedule_mode}`. A Cloudflare worker handles this. The worker is **not in this repo**; it needs a GitHub PAT stored as the Cloudflare secret `github-pat` and uses it to create the job for GMT (see README).
-- **Before submitting**, `code.js` checks whether a run for the URL exists from the last 30 days. If one does, it redirects to the details page.
+- **Submit:** `POST https://gateway.green-coding.io/save` with `{email, page, mode, schedule_mode}`. `mode` is `'website'`, or `'website-script'` plus `script` and `language` (`js` only; `python` is shown as "coming soon") for a User Journey. The gateway responds with `data.job_id`; for User Journeys, `code.js` redirects to `script-details.html?job_id=…`. A Cloudflare worker handles the gateway. The worker is **not in this repo**; it needs a GitHub PAT stored as the Cloudflare secret `github-pat` and uses it to create the job for GMT (see README).
+- **Before submitting a website test**, `code.js` checks whether a run for the URL exists from the last 30 days. If one does, it redirects to the details page. User Journeys skip this check.
 - **Usage scenario:** runs use the GMT Playwright template
   https://github.com/green-coding-solutions/green-metrics-tool/tree/main/templates/website,
   specifically `templates/website/usage_scenario_cached.yml`. A local copy is in `/home/node/green-metrics-tool/templates/website/`.
   - Variables: `__GMT_VAR_PAGE__` (URL) and `__GMT_VAR_SLEEP__` (5).
   - Phases read by the frontend: `Visit page and idle for 5 s` and `Scroll down and wait for 5 s`. Container: `gmt-playwright-nodejs`.
   - If phase names, the container name or the sleep value change in the template, the lookups in `code.js`/`details.js` break.
+- **User Journey scenario:** `templates/website/usage_scenario_playwright_js_cached.yml` (`SCRIPT_FILENAME` in `script-details.js`). The user's script is passed base64-encoded as `__GMT_VAR_SCRIPT_B64__` and run via `gmtRunScriptB64()`. The frontend reads only the phase `Run User Journey` (`SCRIPT_PHASE`); `Open page` is measured separately and not shown. Renaming the phase in GMT breaks the page.
 - **Cluster:** runs execute on the GMT cluster, currently on **machine 6** (status: https://metrics.green-coding.io/cluster-status.html). `machine_id=6` is hardcoded in the timeline links in `code.js` and `details.js`.
 - **Read API** (`api.green-coding.io`):
-  - `/v2/runs?uri=...green-metrics-tool&filename=templates/website/usage_scenario_cached.yml&failed=false&usage_scenario_variables=<url>`. Row fields: `[0]` = run uuid, `[4]` = date, `[7]` = usage_scenario_variables object.
+  - `/v2/runs?uri=...green-metrics-tool&filename=templates/website/usage_scenario_cached.yml&failed=false&usage_scenario_variables=<url>`. Row fields: `[0]` = run uuid, `[4]` = date, `[7]` = usage_scenario_variables object, `[10]` = end_measurement, `[11]` = failed.
+  - `/v2/runs?job_id=<id>&limit=1` (used by `fetchRunByJobId`). A 204 response or `end_measurement == null` (when not failed) means the run is not done yet.
   - `/v1/phase_stats/single/<uuid>`. Values are at `data.data[<phase>].data[<metric>].data[<detail>].data[<uuid>].mean`.
 - **Metrics read** (names must match GMT DB naming, where underscores separate scopes):
   - `cpu_energy_rapl_msr_component` and `cpu_power_rapl_msr_component` (detail `Package_0`)
@@ -60,4 +67,4 @@
 python3 -m http.server 8000
 ```
 - The API calls need CORS. Use a Chromium browser started with `--disable-web-security --user-data-dir=/tmp/...` (see README).
-- Check manually: `http://localhost:8000/` (recent-runs table loads) and `http://localhost:8000/details.html?page=https://www.green-coding.io`.
+- Check manually: `http://localhost:8000/` (recent-runs table loads), `http://localhost:8000/details.html?page=https://www.green-coding.io` and `http://localhost:8000/script-details.html?job_id=<existing job id>`.
