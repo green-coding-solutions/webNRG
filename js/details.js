@@ -1,6 +1,8 @@
 "use strict";
 
 (async () => {
+    showClusterStatus(); // not awaited on purpose
+
     const url_params = getURLParams()
 
     let normalized_url;

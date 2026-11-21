@@ -29,6 +29,15 @@
                     <div id="tagline">... pronounced web energy ;)</div>
                 </h2>
             </a>
+            <div class="ui icon yellow message cluster-health-message" style="display: none;"> <!-- style must be inline to override fomantic -->
+                <i class="exclamation triangle icon"></i>
+                <div class="content">
+                    <div class="header">
+                        Cluster Status
+                    </div>
+                    <div id="cluster-health-warnings"></div>
+                </div>
+            </div>
             <div class="ui stacked segment left aligned">
                 <h1 id="website-name" class="ui massive teal ribbon label"></h1>
                 <p style="margin-left: 0; margin-top: 10px; text-align: left;">Tested on <span id="last-run-date"></span></p>

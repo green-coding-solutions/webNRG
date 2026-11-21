@@ -112,6 +112,8 @@
         });
     });
 
+    showClusterStatus(); // not awaited on purpose. Runs in parallel to the table loading
+
     let phase_stats_data;
     const runs_data = await fetchData();
     if (runs_data == undefined) {

@@ -47,6 +47,7 @@ There are two flows:
   - `phase_time_syscall_system` (detail `[SYSTEM]`)
   - `carbon_intensitylevel_electricitymaps_machine` (detail `electricity_maps`; levels 1 = Low, 2 = Moderate, 3 = High)
   - `carbon_intensity_elephant_machine` (gCO₂e/kWh; the first detail key is used)
+- **Cluster status:** `showClusterStatus()` in `js/shared.js` calls `/v1/cluster/status?machine_id=6&service=ScenarioRunner`. The API returns 204 when there are no messages; messages with NULL `machine_id`/`service` apply to everything and are included. Unresolved messages are shown in the yellow `.cluster-health-message` box at the top of `index.html` and `details.html` (not yet on `script-details.html`). If the API cannot be reached (network error or non-2xx), the same box shows an "API not reachable" message instead. Row fields: `[0]` = id, `[1]` = message, `[3]` = created_at.
 - **Dashboard links:** `https://metrics.green-coding.io/stats.html?id=<uuid>` and `timeline.html?...`.
 
 ## Rating logic

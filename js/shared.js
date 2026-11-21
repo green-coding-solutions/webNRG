@@ -90,6 +90,46 @@ function sleep(ms) {
 }
 
 
+// Shows unresolved GMT cluster status messages that affect the machine / service webNRG runs on.
+// API returns 204 if there are no messages. Entries with machine_id / service NULL affect all and are included by the API
+async function showClusterStatus(machine_id=6, service='ScenarioRunner') {
+    const box = document.querySelector('.cluster-health-message.yellow');
+    if (box == null) return;
+
+    const container = box.querySelector('#cluster-health-warnings');
+
+    // If the API is down, measurements cannot be submitted or displayed either, so we tell the user in the same box
+    const showUnreachable = (error) => {
+        console.error('Could not fetch cluster status from API:', error);
+        container.innerHTML = '<p>The Green Metrics Tool API is currently not reachable. Measurements and results may not be available - please try again later.</p>';
+        box.style.display = 'flex'; // show
+    };
+
+    let json;
+    try {
+        const response = await fetch(`https://api.green-coding.io/v1/cluster/status?machine_id=${machine_id}&service=${encodeURIComponent(service)}`);
+        if (response.status == 204) return; // no messages. All good
+        if (!response.ok) {
+            showUnreachable(`HTTP ${response.status}`);
+            return;
+        }
+        json = await response.json();
+    } catch (error) {
+        showUnreachable(error);
+        return;
+    }
+
+    if (!json?.data?.length) return;
+
+    const date_options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    container.innerHTML = '';
+    json.data.forEach(message => {
+        container.insertAdjacentHTML('beforeend', `<p id="message-${message[0]}"><b>${new Date(message[3]).toLocaleDateString('sv-SE', date_options)}</b>: ${message[1]}</p>`);
+    });
+    box.style.display = 'flex'; // show
+}
+
+
 const getURLParams = () => {
     const url_params = new URLSearchParams(window.location.search);
     if (!url_params.size) return {};
