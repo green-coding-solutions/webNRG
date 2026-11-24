@@ -1,3 +1,7 @@
+Part of the Green Software Landscape
+
+[![Website Energy Measurement](https://raw.githubusercontent.com/bundesverband-green-software/landscape/refs/heads/main/badges/website-energy-measurement.svg)](https://landscape.bundesverband-green-software.de)
+
 This repository is live at https://website-tester.green-coding.io.
 
 ## What does it do?
